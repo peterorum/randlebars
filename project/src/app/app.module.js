@@ -1,0 +1,2 @@
+angular
+    .module( "mochular.main", []);

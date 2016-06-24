@@ -1,0 +1,83 @@
+{
+    "preset": "idiomatic",
+    "verbose": true,
+    "validateIndentation": 2,
+    "disallowDanglingUnderscores": false,
+    "requireCamelCaseOrUpperCaseIdentifiers": false,
+    "requireCurlyBraces": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "try",
+        "catch",
+        "case",
+        "default"
+    ],
+    "requireLineBreakAfterVariableAssignment": true,
+    "requireSpaceAfterLineComment": {
+        "allExcept": ["#", "="]
+    },
+    "requireSpaceBeforeBinaryOperators": [
+        "=",
+        ",",
+        "+",
+        "-",
+        "/",
+        "*",
+        "==",
+        "===",
+        "!=",
+        "!=="
+    ],
+    "requireSpacesInConditionalExpression": {
+        "afterTest": true,
+        "beforeConsequent": true,
+        "afterConsequent": true,
+        "beforeAlternate": true
+    },
+    "requireMultipleVarDecl": false,
+    "requireVarDeclFirst": false,
+    "requireSpaceAfterKeywords": [
+        "do",
+        "for",
+        "if",
+        "else",
+        "switch",
+        "case",
+        "try",
+        "catch",
+        "void",
+        "while",
+        "with",
+        "return",
+        "typeof"
+    ],
+    "requireLineFeedAtFileEnd": false,
+    "requireSpaceBeforeBinaryOperators": true,
+    requireSpacesInAnonymousFunctionExpression: false,
+    disallowTrailingComma: false,
+    disallowMixedSpacesAndTabs: false,
+    "disallowKeywordsOnNewLine": [],
+    disallowSpacesInsideParentheses: false,
+    "disallowKeywords": [
+        "with"
+    ],
+    "requirePaddingNewlinesBeforeKeywords": [
+        "do",
+        "for",
+        "if",
+        "while"
+    ],
+    "requirePaddingNewLinesAfterBlocks": true,
+    "validateParameterSeparator": ", ",
+    "requireSpaceAfterComma": true,
+    "validateQuoteMarks": false,
+    "validateCommentPosition": false,
+    "requireSpacesInsideParentheses": false,
+    "requireSpacesInsideBrackets": false,
+    "maximumLineLength": 128,
+    "disallowSpacesInCallExpression": false
+}
+
