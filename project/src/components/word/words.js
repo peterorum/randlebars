@@ -5586,7 +5586,6 @@
     "ure",
     "urge",
     "urgent",
-    "usa",
     "use",
     "used",
     "useful",
@@ -5937,7 +5936,7 @@
 
   function setWord() {
 
-    let src = '{{word}}';
+    let src = $('#word-template').html();
     let template = Handlebars.compile(src);
 
     let html = template({
