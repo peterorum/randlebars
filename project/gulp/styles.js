@@ -7,7 +7,7 @@ var conf = require('./conf');
 var $ = require('gulp-load-plugins')();
 
 var src = [
-    path.join(conf.paths.css.src, '../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss'),
+    path.join(conf.paths.css.src, 'styles/variables/**/*.scss'),
     path.join(conf.paths.css.src, 'styles/common/**/*.scss'),
     path.join(conf.paths.css.src, 'components/**/*.scss')
 ];
@@ -49,16 +49,6 @@ gulp.task('libs:css', function() {
         .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
         .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
         .pipe(gulp.dest(conf.paths.css.dest));
-});
-
-// copies bootstrap fonts
-// gulp build
-
-gulp.task('libs:fonts', function() {
-
-    return gulp.src(path.join(conf.paths.css.libs, 'bootstrap-sass/assets/fonts/bootstrap/*.{eot,svg,ttf,woff,woff2}'))
-        .pipe(gulp.dest(path.join(conf.paths.css.fonts, 'bootstrap')));
-
 });
 
 // build minified css from css

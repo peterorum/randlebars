@@ -1,0 +1,15 @@
+button {
+
+  border-radius: 6px;
+  background-color: $color-primary;
+  color: $color-secondary;
+  border: 0;
+  text-transform: lowercase;
+  cursor: pointer;
+
+  &.button-lg {
+    padding: 20px;
+    font-family: $sans-serif;
+    font-size: 150%;
+  }
+}

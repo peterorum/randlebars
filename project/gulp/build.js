@@ -2,5 +2,5 @@
 
 var gulp = require('gulp');
 
-gulp.task('build', ['styles:build', 'libs:css', 'libs:fonts', 'scripts:build', 'libs:js']);
+gulp.task('build', ['styles:build', 'libs:css', 'scripts:build', 'libs:js']);
 

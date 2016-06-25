@@ -1,0 +1,14 @@
+body {
+  background-color: $main-background-color;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  main {
+    margin: 0 auto;
+    color: $text-color;
+  }
+}

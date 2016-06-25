@@ -1,4 +1,4 @@
-  # randlebars
+# randlebars
 Basic handlebars setup with mocha, chai, es6/babel, gulp, sass, eslint, jscs, sass-lint, bower, browser-sync.
 
 Basic structure for a front-end project using gulp, handlebars, jquery, es6 & mocha/chai for tests.
