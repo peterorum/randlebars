@@ -22,7 +22,7 @@
   "Modernizr": false,
   "__utils__": false,
   "expect": false,
-  "Highcharts": false
+  "Handlebars": false
   },
   "rules": {
   "no-mixed-spaces-and-tabs": 0,
