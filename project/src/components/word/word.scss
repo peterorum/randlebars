@@ -1,7 +1,10 @@
 .word {
   font-family: $serif;
   font-size: 200%;
-  letter-spacing: 2px;
   margin: 20px 0 50px 0;
+  text-align: center;
+}
+
+.word-toolbar {
   text-align: center;
 }
