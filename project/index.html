@@ -9,18 +9,14 @@
 
 <body>
   <div class='container'>
-    <header>
-      <h1>Random Word</h1>
-    </header>
+    {{> header }}
     <main>
       <p id='word' class='word'></p>
       <div class='word-toolbar'>
         <button id='word-get' class='button-lg'>Another</button>
       </div>
     </main>
-    <footer>
-      <p class='small'>&copy 2016 Seraline P/L</p>
-    </footer>
+    {{> footer }}
   </div>
   <!-- templates -->
   <script id="word-template" type="text/x-handlebars-template">
@@ -28,7 +24,8 @@
   </script>
   <!-- js -->
   <script src='https://code.jquery.com/jquery-3.0.0.min.js'></script>
-  <script src='dist/js/libs.min.js'></script>
-  <script src='dist/js/scripts.min.js'></script>
+  <script src='dist/js/require.min.js' data-main='dist/js/main'></script>
+<!--   <script src='dist/js/libs.min.js'></script>
+  <script src='dist/js/scripts.min.js'></script> -->
 </body>
 </html>

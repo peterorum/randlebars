@@ -16,6 +16,7 @@ var src = [
 
 var libs = [
     path.join(conf.paths.js.libs, 'handlebars/handlebars.min.js')
+    // path.join(conf.paths.js.libs, '../libs/js/require/text.min.js')
 ];
 
 // eslint
@@ -65,10 +66,18 @@ gulp.task('scripts:js', function() {
 // join all specific library js (must already be minimized)
 // doesn't change often, so not in watch. just gulp build
 
-gulp.task('libs:js', function() {
+gulp.task('libs:js-min', function() {
 
     return gulp.src(libs)
         .pipe($.concat('libs.min.js'))
+        .pipe(gulp.dest(conf.paths.js.dest));
+});
+
+gulp.task('libs:require', function() {
+
+    var folder = path.join(conf.paths.js.libs, '../libs/js/require/require.min.js');
+
+    return gulp.src(folder)
         .pipe(gulp.dest(conf.paths.js.dest));
 });
 
@@ -100,6 +109,8 @@ gulp.task('scripts:lint', [ 'scripts:lint:eslint', 'scripts:lint:jscs' ]);
 
 // only run manually, not with watch
 gulp.task('scripts:fix', [ 'scripts:lint:jscs:fix' ]);
+
+gulp.task('libs:js', [ 'libs:js-min', 'libs:require' ]);
 
 // wait for js to build before minifying
 gulp.task('scripts:build', [ 'scripts:js' ], function() {

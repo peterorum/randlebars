@@ -16,13 +16,13 @@
   "_": false,
   "casper": false,
   "phantomcss": false,
-  "angular": false,
-  "inject": false,
   "google": false,
   "Modernizr": false,
   "__utils__": false,
   "expect": false,
-  "Handlebars": false
+  "Handlebars": false,
+  "define": false,
+  "require": false
   },
   "rules": {
   "no-mixed-spaces-and-tabs": 0,
