@@ -9,11 +9,15 @@
 
     $('#word-get').on('click', function() {
 
+      let that = this;
+
       el.fadeOut();
+      $(that).animateCss('bounce');
 
       el.promise().done(function() {
         window.RandlebarsApp.setWord(el);
         el.fadeIn();
+
       });
 
     });
