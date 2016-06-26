@@ -70,45 +70,6 @@ gulp.task('scripts:js', function() {
     .pipe(gulp.dest(conf.paths.js.dest));
 });
 
-// copy over handlebars helpers, partials & templates
-gulp.task('scripts:handlebars:partials', function() {
-
-  var handlebars = [
-    path.join(conf.paths.js.src, 'partials/*.partial'),
-  ];
-
-  return gulp.src(handlebars)
-    .pipe(gulp.dest(path.join(conf.paths.js.dest, '/partials')));
-});
-
-gulp.task('scripts:handlebars:helpers', function() {
-
-  var handlebars = [
-    path.join(conf.paths.js.src, 'helpers/*.js')
-  ];
-
-  return gulp.src(handlebars)
-    .pipe(gulp.dest(path.join(conf.paths.js.dest, '/helpers')));
-});
-
-gulp.task('scripts:handlebars:templates', function() {
-  gulp.src(path.join(conf.paths.views.src, '**/*.template.hbs'))
-    .pipe($.handlebars())
-    .pipe($.defineModule('amd'))
-    .pipe($.replace(/define\(\["handlebars"\]/g, 'define(["handlebars.runtime"]'))
-    .pipe($.concat('templates.js'))
-    .pipe(gulp.dest(conf.paths.views.dest));
-});
-
-gulp.task('scripts:handlebars:partials', function() {
-  gulp.src(path.join(conf.paths.views.src, '**/*.partial.hbs'))
-    .pipe($.handlebars())
-    .pipe($.defineModule('amd'))
-    .pipe($.replace(/define\(\["handlebars"\]/g, 'define(["handlebars.runtime"]'))
-    .pipe($.concat('partials.js'))
-    .pipe(gulp.dest(conf.paths.views.dest));
-});
-
 // join all specific library js (must already be minimized)
 // doesn't change often, so not in watch. just gulp build
 
@@ -158,9 +119,7 @@ gulp.task('scripts:fix', ['scripts:lint:jscs:fix']);
 
 gulp.task('libs:js', ['libs:js:min', 'libs:js:require']);
 
-gulp.task('scripts:handlebars', ['scripts:handlebars:partials', 'scripts:handlebars:helpers', 'scripts:handlebars:templates']);
-
 // wait for js to build before minifying
-gulp.task('scripts:build', ['scripts:js', 'scripts:handlebars'], function() {
+gulp.task('scripts:build', ['scripts:js'], function() {
   return minify();
 });

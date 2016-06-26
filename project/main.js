@@ -8,7 +8,7 @@
     },
   });
 
-  require(['views/home', 'views/partials'], function(home) {
+  require(['../views/templates', '../views/partials'], function(home) {
 
     $(document).ready(function() {
 
