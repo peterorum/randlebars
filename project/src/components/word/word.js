@@ -2,7 +2,6 @@
 
   $(document).ready(function() {
 
-
     $(document).on('click', '#word-get', function() {
       let that = this;
 

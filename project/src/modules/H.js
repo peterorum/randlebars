@@ -1,5 +1,7 @@
 define(['handlebars', 'module', 'require'], function(H, module, require) {
 
+  // modularized handlebars object
+
   // register handlebars items
 
   let opts = module.config();

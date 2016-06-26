@@ -46,7 +46,7 @@
 
       $('#content').html(template(context));
 
-      // get word
+      // init word
       $('#word-get').trigger('click');
     });
 
