@@ -19,7 +19,7 @@ module.exports = {
             "port": 8080
         }
     },
-    "files":  "dist/css/**/*.min.css, dist/js/**/*.min.js, index.html",
+    "files":  "dist/css/**/*.min.css, dist/js/**/*.min.js, dist/views/*.js, index.html",
     "watchOptions": {},
     "server": true,
     "proxy": false,

@@ -7,9 +7,18 @@
     "test": "karma start",
     "test:watch": "karma start --auto-watch --no-single-run",
     "serve": "browser-sync start --config browser-sync-config.js",
+    "watch" : "npm-watch",
     "handlebars": "mkdir -p dist/views && npm run handlebars:templates && npm run handlebars:partials",
     "handlebars:templates": "handlebars -a -e template.hbs -f dist/views/templates.js  src/components/**/*.template.hbs",
     "handlebars:partials": "handlebars -a -p -e partial.hbs -f dist/views/partials.js  src/components/**/*.partial.hbs"
+  },
+  "watch": {
+    "handlebars": {
+      "patterns": ["src/components"],
+           "extensions": "hbs",
+           "ignore": "",
+           "quiet": "false"
+    }
   },
   "repository": {
     "type": "git",
@@ -50,6 +59,7 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sinon": "^1.0.4",
     "mocha": "^2.4.5",
+    "npm-watch": "^0.1.4",
     "phantomjs-prebuilt": "^2.1.6",
     "sinon": "^1.17.3"
   },
