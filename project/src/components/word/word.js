@@ -2,11 +2,20 @@
 
   $(document).ready(function() {
 
-    window.RandlebarsApp.setWord();
+    let el = $('#word');
+
+    window.RandlebarsApp.setWord(el);
+    el.fadeIn();
 
     $('#word-get').on('click', function() {
-      window.RandlebarsApp.setWord();
-      $(this).blur();
+
+      el.fadeOut();
+
+      el.promise().done(function() {
+        window.RandlebarsApp.setWord(el);
+        el.fadeIn();
+      });
+
     });
   });
 

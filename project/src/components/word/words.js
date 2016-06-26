@@ -962,10 +962,6 @@
     "choosing",
     "chose",
     "chosen",
-    "christ",
-    "christian",
-    "christians",
-    "christmas",
     "chrome",
     "chuck",
     "chunky",
@@ -1518,10 +1514,8 @@
     "devices",
     "devil",
     "devils",
-    "dey",
     "dial",
     "diamond",
-    "diamonds",
     "diary",
     "dick",
     "did",
@@ -5622,7 +5616,6 @@
     "venice",
     "venue",
     "venus",
-    "ver",
     "verge",
     "verse",
     "version",
@@ -5934,7 +5927,7 @@
     return word;
   }
 
-  function setWord() {
+  function setWord(el) {
 
     let src = $('#word-template').html();
     let template = Handlebars.compile(src);
@@ -5943,7 +5936,7 @@
       word: getWord()
     });
 
-    $('#word').html(html);
+    $(el).html(html);
   }
 
   window.RandlebarsApp = window.RandlebarsApp || {};

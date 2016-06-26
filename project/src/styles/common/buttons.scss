@@ -6,10 +6,16 @@ button {
   border: 0;
   text-transform: lowercase;
   cursor: pointer;
+  outline-color: $main-background-color;
 
   &.button-lg {
     padding: 20px;
     font-family: $sans-serif;
     font-size: 150%;
+  }
+
+  &:hover {
+    background-color: lighten($color-primary, 10%);
+
   }
 }
