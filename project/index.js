@@ -1,5 +1,7 @@
 (function() {
 
+  // keep as es5
+
   require.config({
     shim: {
       "handlebars": {
@@ -12,7 +14,7 @@
 
     $(document).ready(function() {
 
-      let html = home({}, {helpers: {}});
+      var html = home({}, {helpers: {}});
 
       $('#content').html(html);
 

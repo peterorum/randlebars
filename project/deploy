@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cd ~/Dropbox/Projects/randlebars/project
+pwd
+./rebuild
+
+rsync -crv dist server/* index.html functal:/home/ec2-user/randlebars/

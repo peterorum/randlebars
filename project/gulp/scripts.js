@@ -83,6 +83,8 @@ gulp.task('libs:js:min', function() {
 
 gulp.task('libs:js:require', function() {
 
+  // do not run through babel
+
   return gulp.src(requireLibs)
     .pipe(gulp.dest(conf.paths.js.dest));
 });
