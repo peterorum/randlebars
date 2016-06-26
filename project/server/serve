@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# npm install -g forever
+# sudo ln -s /usr/local/bin/node/bin/node /usr/bin/node
+# in /etc/rc.local, add..
+# sudo -u ec2-user /home/ec2-user/randlebars/serve
+
+cd /home/ec2-user/randlebars
+
+/usr/local/bin/node/bin/forever start server.js
