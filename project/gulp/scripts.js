@@ -20,7 +20,7 @@ var libs = [
 
 // expected as individual modules
 var requireLibs = [
-    path.join(conf.paths.js.libs, 'handlebars/handlebars.js'),
+    path.join(conf.paths.js.libs, 'handlebars/handlebars.runtime.js'),
     path.join(conf.paths.js.libs, '../libs/js/require/require.js'),
     path.join(conf.paths.js.libs, '../libs/js/require/text.js'),
     path.join(conf.paths.js.src, 'modules/*.js'),
