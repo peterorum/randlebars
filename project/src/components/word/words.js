@@ -5927,20 +5927,8 @@
     return word;
   }
 
-  function setWord(el) {
-
-    let src = $('#word-template').html();
-    let template = Handlebars.compile(src);
-
-    let html = template({
-      word: getWord()
-    });
-
-    $(el).html(html);
-  }
-
   window.RandlebarsApp = window.RandlebarsApp || {};
 
-  window.RandlebarsApp.setWord = setWord;
+  window.RandlebarsApp.getWord = getWord;
 
 })(jQuery, window);

@@ -1,5 +1,7 @@
 (function() {
 
+  // set up handlebars config with require.js
+
   let helpers = [];
 
   let partials = [
@@ -35,12 +37,18 @@
     }
   });
 
+  require(['H', 'text!templates/home.template'], function(H, src) {
 
-  require(['H', 'text!templates/home.template'], function(H, src){
-    let template =H.compile(src);
-    let context = {};
+    $(document).ready(function() {
 
-    $('#content').html(template(context));
+      let template = H.compile(src);
+      let context = {};
+
+      $('#content').html(template(context));
+
+      // get word
+      $('#word-get').trigger('click');
+    });
 
   });
 

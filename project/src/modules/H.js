@@ -1,5 +1,7 @@
 define(['handlebars', 'module', 'require'], function(H, module, require) {
 
+  // register handlebars items
+
   let opts = module.config();
 
   for (let i in opts.helpers) {
@@ -14,7 +16,6 @@ define(['handlebars', 'module', 'require'], function(H, module, require) {
     let src = require(`text!partials/${partial}.partial`);
 
     H.registerPartial(partial, src);
-
   }
 
   return H;

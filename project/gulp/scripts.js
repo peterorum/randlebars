@@ -18,6 +18,7 @@ var src = [
 var libs = [
 ];
 
+// expected as individual modules
 var requireLibs = [
     path.join(conf.paths.js.libs, 'handlebars/handlebars.js'),
     path.join(conf.paths.js.libs, '../libs/js/require/require.js'),
@@ -123,7 +124,7 @@ gulp.task('libs:js:require', function() {
 
 function minify() {
 
-    return gulp.src([ path.join(conf.paths.js.dest, '/**/*.js'), '!' + path.join(conf.paths.js.dest, '/**/*.min.js') ])
+    return gulp.src([ path.join(conf.paths.js.dest, '/scripts.js') ])
         .pipe($.concat('scripts.js'))
         .pipe($.sourcemaps.init())
         .pipe($.babel({

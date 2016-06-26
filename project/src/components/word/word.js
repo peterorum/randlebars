@@ -2,20 +2,17 @@
 
   $(document).ready(function() {
 
-    let el = $('#word');
 
-    window.RandlebarsApp.setWord(el);
-    el.fadeIn();
-
-    $('#word-get').on('click', function() {
-
+    $(document).on('click', '#word-get', function() {
       let that = this;
+
+      let el = $('#word');
 
       el.fadeOut();
       $(that).animateCss('bounce');
 
       el.promise().done(function() {
-        window.RandlebarsApp.setWord(el);
+        el.text(window.RandlebarsApp.getWord());
         el.fadeIn();
 
       });
