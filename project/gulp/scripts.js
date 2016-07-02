@@ -8,7 +8,7 @@ var $ = require('gulp-load-plugins')();
 
 var src = [
   path.join(conf.paths.js.src, '/components/**/*.js'),
-  path.join(conf.paths.js.src, '/templates/**/*.js')
+  path.join(conf.paths.js.src, '/pages/**/*.js')
 ];
 
 // compiled handlebars
