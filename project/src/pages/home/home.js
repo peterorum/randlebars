@@ -8,6 +8,8 @@
 
   function renderPage() {
 
+    // render whole page with initial data
+
     let word = window.RandlebarsApp.getWord();
 
     var html = Handlebars.templates.home({
@@ -16,22 +18,6 @@
 
     $('#content').html(html);
 
-    // use .one so it's removed on click, as it is recreated
-
-    $(document).one('click', '#word-get', function() {
-
-      let that = this;
-
-      let el = $('#word');
-      el.fadeOut();
-      $(that).animateCss('bounce');
-
-      el.promise().done(function() {
-        renderPage();
-      });
-
-    });
-
+    $('#word').fadeIn();
   }
-
 })(jQuery);

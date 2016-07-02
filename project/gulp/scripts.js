@@ -7,6 +7,7 @@ var conf = require('./conf');
 var $ = require('gulp-load-plugins')();
 
 var src = [
+  path.join(conf.paths.js.src, '/app/**/*.js'),
   path.join(conf.paths.js.src, '/components/**/*.js'),
   path.join(conf.paths.js.src, '/pages/**/*.js')
 ];

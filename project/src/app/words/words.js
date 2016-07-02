@@ -4507,7 +4507,6 @@
     "scoring",
     "scorpio",
     "scotland",
-    "scott",
     "scottish",
     "scratch",
     "scream",

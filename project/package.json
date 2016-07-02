@@ -14,7 +14,7 @@
   },
   "watch": {
     "handlebars": {
-      "patterns": ["src/pages", "src/components"],
+      "patterns": ["src/app", "src/pages", "src/components"],
            "extensions": "hbs",
            "ignore": "",
            "quiet": "false"
