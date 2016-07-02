@@ -8,6 +8,7 @@ var $ = require('gulp-load-plugins')();
 
 var src = [
   path.join(conf.paths.js.src, '/components/**/*.js'),
+  path.join(conf.paths.js.src, '/templates/**/*.js')
 ];
 
 // compiled handlebars
@@ -93,7 +94,9 @@ gulp.task('libs:js:separate', function() {
 
 function minify() {
 
-  return gulp.src([path.join(conf.paths.js.dest, '/scripts.js')])
+  return gulp.src([path.join(conf.paths.js.dest, '/partials.js'),
+    path.join(conf.paths.js.dest, '/templates.js'),
+    path.join(conf.paths.js.dest, '/scripts.js')])
     .pipe($.concat('scripts.js'))
     .pipe($.sourcemaps.init())
     .pipe($.babel({
@@ -122,5 +125,10 @@ gulp.task('libs:js', ['libs:js:min', 'libs:js:separate']);
 
 // wait for js to build before minifying
 gulp.task('scripts:build', ['scripts:js'], function() {
+  return minify();
+});
+
+// re-minify after handlebars compilation
+gulp.task('scripts:build:minify', [], function() {
   return minify();
 });

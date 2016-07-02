@@ -8,9 +8,9 @@
     "test:watch": "karma start --auto-watch --no-single-run",
     "serve": "browser-sync start --config browser-sync-config.js",
     "watch" : "npm-watch",
-    "handlebars": "mkdir -p views && npm run handlebars:templates && npm run handlebars:partials",
-    "handlebars:templates": "handlebars -e template.hbs -f views/templates.js  src/components/**/*.template.hbs",
-    "handlebars:partials": "handlebars -p -e partial.hbs -f views/partials.js  src/components/**/*.partial.hbs"
+    "handlebars": "mkdir -p dist/js && npm run handlebars:templates && npm run handlebars:partials",
+    "handlebars:templates": "handlebars -e hbs -f dist/js/templates.js  src/templates/**/*.hbs",
+    "handlebars:partials": "handlebars -p -e hbs -f dist/js/partials.js  src/components/**/*.hbs"
   },
   "watch": {
     "handlebars": {

@@ -2,7 +2,7 @@
 
   $(document).ready(function() {
 
-    var html = Handlebars.templates.main();
+    var html = Handlebars.templates.home();
 
     $('#content').html(html);
 
