@@ -1,4 +1,6 @@
-(function($, window) {
+(function() {
+
+  window.RandlebarsApp = window.RandlebarsApp || {};
 
   let words = [
     "abandoned",
@@ -5878,7 +5880,6 @@
     "young",
     "younger",
     "youth",
-    "yrs",
     "yuh",
     "yum",
     "yummy",
@@ -5886,9 +5887,7 @@
     "zero",
     "zip",
     "zombie",
-    "zombies",
     "zone",
-    "zones",
     "zoo",
     "zoom"
   ];
@@ -5900,8 +5899,6 @@
     return word;
   }
 
-  window.RandlebarsApp = window.RandlebarsApp || {};
-
   window.RandlebarsApp.getWord = getWord;
 
-})(jQuery, window);
+})();
