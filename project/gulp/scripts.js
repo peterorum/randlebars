@@ -8,31 +8,28 @@ var $ = require('gulp-load-plugins')();
 
 var src = [
   path.join(conf.paths.js.src, '/components/**/*.js'),
-  '!' + path.join(conf.paths.js.src, '/components/**/*.spec.js')
+];
+
+// compiled handlebars
+var views = [
+  path.join(conf.paths.js.views, '/*.js')
 ];
 
 // must already be minified
 // after change, run gulp build
 
-
-var libs = [];
+var libs = [
+  path.join(conf.paths.js.libs, 'handlebars/handlebars.runtime.min.js')
+];
 
 // expected as individual modules
-var requireLibs = [
-  path.join(conf.paths.js.libs, 'handlebars/handlebars.runtime.js'),
-  path.join(conf.paths.js.libs, '../libs/js/require/require.js'),
-  path.join(conf.paths.js.src, 'modules/*.js'),
-  path.join(conf.paths.js.src, '../index.js')
-];
+var separateLibs = [];
 
 // eslint
 
 gulp.task('scripts:lint:eslint', function() {
 
   return gulp.src(src)
-    .pipe($.debug({
-      title: 'files:'
-    }))
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.eslint.failAfterError());
@@ -64,7 +61,10 @@ gulp.task('scripts:lint:jscs:fix', function() {
 
 gulp.task('scripts:js', function() {
 
-  return gulp.src(src.concat('!' + path.join(conf.paths.js.src, '/**/*.spec.js')))
+  return gulp.src(views.concat(src))
+    .pipe($.debug({
+      title: 'scripts:js:'
+    }))
     .pipe($.concat('scripts.js'))
     .pipe(gulp.dest(conf.paths.js.dest));
 });
@@ -79,13 +79,13 @@ gulp.task('libs:js:min', function() {
     .pipe(gulp.dest(conf.paths.js.dest));
 });
 
-// modules that must be individual
+// // modules that must be individual
 
-gulp.task('libs:js:require', function() {
+gulp.task('libs:js:separate', function() {
 
   // do not run through babel
 
-  return gulp.src(requireLibs)
+  return gulp.src(separateLibs)
     .pipe(gulp.dest(conf.paths.js.dest));
 });
 
@@ -118,7 +118,7 @@ gulp.task('scripts:lint', ['scripts:lint:eslint', 'scripts:lint:jscs']);
 // only run manually, not with watch
 gulp.task('scripts:fix', ['scripts:lint:jscs:fix']);
 
-gulp.task('libs:js', ['libs:js:min', 'libs:js:require']);
+gulp.task('libs:js', ['libs:js:min', 'libs:js:separate']);
 
 // wait for js to build before minifying
 gulp.task('scripts:build', ['scripts:js'], function() {

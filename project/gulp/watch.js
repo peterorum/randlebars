@@ -7,7 +7,7 @@ var conf = require('./conf');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('watch:js', function () {
-    $.watch(path.join(conf.paths.js.src, '/**/*.js'), $.batch(function (events, done) {
+    $.watch([path.join(conf.paths.js.src, '/**/*.js'), path.join(conf.paths.js.views, '/**/*.js')], $.batch(function (events, done) {
         gulp.start(['scripts:lint', 'scripts:build'], done);
     }));
 });

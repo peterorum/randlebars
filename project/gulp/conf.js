@@ -13,12 +13,9 @@ exports.paths = {
   },
   js: {
     src: 'src',
+    views: 'views', // intermediate compiled handlebars
     dest: 'dist/js',
     libs: 'bower_components'
-  },
-  views: {
-    src: 'src',
-    dest: 'dist/views'
   }
 };
 

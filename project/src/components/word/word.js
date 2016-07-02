@@ -5,6 +5,7 @@
     $(document).on('click', '#word-get', function() {
       let that = this;
 
+      console.log('getting');
       let el = $('#word');
 
       el.fadeOut();
