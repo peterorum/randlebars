@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ~/Dropbox/Projects/randlebars/project
+cd ~/Projects/randlebars/project
 pwd
 ./rebuild
 

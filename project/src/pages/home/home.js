@@ -16,7 +16,9 @@
       word: word
     });
 
-    $('#content').html(html);
+    $('#content')
+      .empty()
+      .html(html);
 
     $('#word').fadeIn();
   }
