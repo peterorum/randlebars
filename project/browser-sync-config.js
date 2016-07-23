@@ -19,7 +19,7 @@ module.exports = {
             "port": 8080
         }
     },
-    "files":  "dist/css/**/*.min.css, dist/js/**/*.min.js, dist/views/*.js, index.html",
+    "files":  "dist/css/**/*.min.css, dist/js/**/*.min.js, dist/pages/*.html",
     "watchOptions": {},
     "server": true,
     "proxy": false,
@@ -56,7 +56,7 @@ module.exports = {
     "reloadDebounce": 0,
     "plugins": [],
     "injectChanges": true,
-    "startPath": null,
+    "startPath": 'dist/pages',
     "minify": true,
     "host": null,
     "codeSync": true,

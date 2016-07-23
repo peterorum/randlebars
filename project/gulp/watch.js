@@ -13,10 +13,9 @@ gulp.task('watch:js', function () {
     }));
 });
 
-// watch handlebars compiled by npm
 gulp.task('watch:handlebars', function () {
-    $.watch([path.join(conf.paths.js.dest, '/templates.js'), path.join(conf.paths.js.dest, '/partials.js')], $.batch(function (events, done) {
-        gulp.start(['scripts:build:minify'], done);
+    $.watch([path.join(conf.paths.js.src, '../index.hbs'), path.join(conf.paths.js.src, '/**/*.hbs')], $.batch(function (events, done) {
+        gulp.start(['scripts:watch:handlebars'], done);
     }));
 });
 
@@ -26,4 +25,10 @@ gulp.task('watch:css', function () {
     }));
 });
 
-gulp.task('watch', ['watch:js', 'watch:handlebars', 'watch:css']);
+gulp.task('watch:pages', function () {
+    $.watch(path.join(conf.paths.css.src, 'pages/**/*.html'), $.batch(function (events, done) {
+        gulp.start(['styles:pages'], done);
+    }));
+});
+
+gulp.task('watch', ['watch:js', 'watch:handlebars', 'watch:css', 'wach:pages']);

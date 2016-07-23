@@ -12,6 +12,10 @@ var src = [
     path.join(conf.paths.css.src, 'components/**/*.scss')
 ];
 
+var pages = [
+    path.join(conf.paths.css.src, 'pages/**/*.html')
+];
+
 var libs = [ path.join(conf.paths.css.src, '/styles/libs.scss') ];
 
 // lint - error checking
@@ -22,6 +26,14 @@ gulp.task('styles:lint', function() {
         .pipe($.sassLint.format())
         .pipe($.sassLint.failOnError())
 });
+
+// copy html pages
+
+gulp.task( 'styles:pages', function() {
+
+    return gulp.src( pages )
+        .pipe( gulp.dest(  conf.paths.css.pages ) );
+} );
 
 // build css from sass (except libs)
 

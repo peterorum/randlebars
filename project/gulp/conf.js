@@ -6,14 +6,16 @@ var gutil = require('gulp-util');
 
 exports.paths = {
   css: {
+    // src
     src: 'src',
+    libs: 'bower_components',
+    // dests
     dest: 'dist/css',
     fonts: 'dist/fonts',
-    libs: 'bower_components'
+    pages: 'dist/pages'
   },
   js: {
     src: 'src',
-    views: 'views', // intermediate compiled handlebars
     dest: 'dist/js',
     libs: 'bower_components'
   }

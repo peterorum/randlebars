@@ -4,6 +4,8 @@ var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
 
+var handlebars = require('handlebars');
+
 var $ = require('gulp-load-plugins')();
 
 var src = [
@@ -12,10 +14,18 @@ var src = [
   path.join(conf.paths.js.src, '/pages/**/*.js')
 ];
 
-// compiled handlebars
-var views = [
-  path.join(conf.paths.js.views, '/*.js')
+// handlebars
+
+// pages
+var handlebarsTemplates = [
+  path.join(conf.paths.js.src, 'pages/**/*.hbs')
 ];
+
+// components
+var handlebarsPartials = [
+  path.join(conf.paths.js.src, 'components/**/*.hbs')
+];
+
 
 // must already be minified
 // after change, run gulp build
@@ -59,11 +69,49 @@ gulp.task('scripts:lint:jscs:fix', function() {
     .pipe(gulp.dest(path.join(conf.paths.js.src, '/')));
 });
 
+// handlebars templates
+gulp.task('scripts:handlebars:templates', function() {
+  return gulp.src(handlebarsTemplates)
+    .pipe($.debug({
+      title: 'templates'
+    }))
+    .pipe($.handlebars({
+      handlebars: handlebars
+    }))
+    .pipe($.wrap('Handlebars.template(<%= contents %>)'))
+    .pipe($.declare({
+      namespace: 'soh.templates',
+      root: "window",
+      noRedeclare: true, // Avoid duplicate declarations
+    }))
+    .pipe($.concat('templates.js'))
+    .pipe(gulp.dest(conf.paths.js.dest));
+});
+
+gulp.task('scripts:handlebars:partials', function() {
+  return gulp.src(handlebarsPartials)
+    .pipe($.debug({
+      title: 'partial'
+    }))
+    .pipe($.handlebars({
+      handlebars: handlebars
+    }))
+    .pipe($.wrap('Handlebars.registerPartial(<%= processPartialName(file.relative) %>, Handlebars.template(<%= contents %>));', {}, {
+      imports: {
+        processPartialName: function(fileName) {
+          return JSON.stringify(path.basename(fileName, '.js'));
+        }
+      }
+    }))
+    .pipe($.concat('partials.js'))
+    .pipe(gulp.dest(conf.paths.js.dest));
+});
+
 // join all js, converting from es6
 
 gulp.task('scripts:js', function() {
 
-  return gulp.src(views.concat(src))
+  return gulp.src(src)
     .pipe($.debug({
       title: 'scripts:js:'
     }))
@@ -124,8 +172,18 @@ gulp.task('scripts:fix', ['scripts:lint:jscs:fix']);
 
 gulp.task('libs:js', ['libs:js:min', 'libs:js:separate']);
 
+gulp.task('scripts:handlebars', ['scripts:handlebars:templates', 'scripts:handlebars:partials']);
+
 // wait for js to build before minifying
-gulp.task('scripts:build', ['scripts:js'], function() {
+
+// watches
+gulp.task('scripts:watch:handlebars', ['scripts:handlebars'], function() {
+  return minify();
+});
+
+
+// wait for js to build before minifying
+gulp.task('scripts:build', ['scripts:handlebars', 'scripts:js'], function() {
   return minify();
 });
 
