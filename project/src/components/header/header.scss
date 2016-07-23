@@ -1,6 +1,9 @@
 .container > header {
+  @include anchor($color-primary);
+
   color: $color-primary;
   font-family: $sans-serif;
   margin: 0 auto;
   text-align: center;
+
 }

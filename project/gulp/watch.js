@@ -31,4 +31,4 @@ gulp.task('watch:pages', function () {
     }));
 });
 
-gulp.task('watch', ['watch:js', 'watch:handlebars', 'watch:css', 'wach:pages']);
+gulp.task('watch', ['watch:js', 'watch:handlebars', 'watch:css', 'watch:pages']);
