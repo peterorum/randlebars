@@ -14,6 +14,8 @@
   var fs = require('fs');
   var path = require('path');
 
+  let htmlPath = 'dist/pages/';
+
   //--------- serve a file
 
   var sendFile = function(res, filename) {
@@ -46,18 +48,27 @@
 
   //--- routing
 
-  //------------ files
-  app.get(/\.(js|css|png|jpg|html)$/, function(req, res) {
+  //------------ static files
+
+  app.use(express.static('dist'));
+
+  app.get(/\.(js|css|png|jpg)$/, function(req, res) {
     var uri = url.parse(req.url, true, false);
 
     sendFile(res, uri.pathname);
   });
 
+  //------------ html
+  app.get(/\.(html)$/, function(req, res) {
+    var uri = url.parse(req.url, true, false);
+
+    sendFile(res, htmlPath + uri.pathname);
+  });
+
   //------------- home page
   app.get('/', function(req, res) {
 
-    sendFile(res, 'index.html');
+    sendFile(res, `${htmlPath}index.html`);
   });
-
 
 }());

@@ -4,4 +4,4 @@ cd ~/Projects/randlebars/project
 pwd
 ./rebuild
 
-rsync -crv dist server/* index.html functal:/home/ec2-user/randlebars/
+rsync -crv dist server/* functal:/home/ec2-user/randlebars/
