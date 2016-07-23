@@ -7,6 +7,7 @@ button {
   text-transform: lowercase;
   cursor: pointer;
   outline-color: $main-background-color;
+  transition: background-color 200ms;
 
   &.button-lg {
     padding: 20px;

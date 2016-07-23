@@ -80,7 +80,7 @@ gulp.task('scripts:handlebars:templates', function() {
     }))
     .pipe($.wrap('Handlebars.template(<%= contents %>)'))
     .pipe($.declare({
-      namespace: 'soh.templates',
+      namespace: 'randlebars.templates',
       root: "window",
       noRedeclare: true, // Avoid duplicate declarations
     }))
@@ -107,7 +107,7 @@ gulp.task('scripts:handlebars:partials', function() {
     .pipe(gulp.dest(conf.paths.js.dest));
 });
 
-// join all js, converting from es6
+// join all js
 
 gulp.task('scripts:js', function() {
 
@@ -157,8 +157,7 @@ function minify() {
     }))
     .pipe($.sourcemaps.write('maps'))
     .pipe(gulp.dest(conf.paths.js.dest));
-}
-;
+};
 
 gulp.task('scripts:minify', function() {
 

@@ -10,9 +10,11 @@
 
     // render whole page with initial data
 
+    let page = $('#content').data('page');
+
     let word = window.RandlebarsApp.getWord();
 
-    var html = Handlebars.templates.home({
+    var html = window.randlebars.templates[page]({
       word: word
     });
 
