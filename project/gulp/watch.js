@@ -13,9 +13,22 @@ gulp.task('watch:js', function () {
     }));
 });
 
-gulp.task('watch:handlebars', function () {
-    $.watch([path.join(conf.paths.js.src, '../index.hbs'), path.join(conf.paths.js.src, '/**/*.hbs')], $.batch(function (events, done) {
-        gulp.start(['scripts:watch:handlebars'], done);
+gulp.task('watch:handlebars:templates', function () {
+    $.watch([path.join(conf.paths.js.src, '/pages/**/*.hbs')], $.batch(function (events, done) {
+        gulp.start(['scripts:handlebars:templates'], done);
+    }));
+});
+
+gulp.task('watch:handlebars:partials', function () {
+    $.watch([path.join(conf.paths.js.src, '/components/**/*.hbs')], $.batch(function (events, done) {
+        gulp.start(['scripts:handlebars:partials'], done);
+    }));
+});
+
+
+gulp.task('watch:pages', function () {
+    $.watch([path.join(conf.paths.js.src, '/pages/**/*.html')], $.batch(function (events, done) {
+        gulp.start(['styles:pages'], done);
     }));
 });
 
@@ -25,4 +38,4 @@ gulp.task('watch:css', function () {
     }));
 });
 
-gulp.task('watch', ['watch:js', 'watch:handlebars', 'watch:css']);
+gulp.task('watch', ['watch:js', 'watch:handlebars:templates', 'watch:handlebars:partials', 'watch:css', 'watch:pages']);

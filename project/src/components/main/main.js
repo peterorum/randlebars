@@ -10,6 +10,8 @@
 
     // render whole page with initial data
 
+    // todo - move data to individual pages
+
     let page = $('#content').data('page');
 
     let word = window.RandlebarsApp.getWord();
