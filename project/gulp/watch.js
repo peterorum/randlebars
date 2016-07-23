@@ -25,10 +25,4 @@ gulp.task('watch:css', function () {
     }));
 });
 
-gulp.task('watch:pages', function () {
-    $.watch(path.join(conf.paths.css.src, 'pages/**/*.html'), $.batch(function (events, done) {
-        gulp.start(['styles:pages'], done);
-    }));
-});
-
-gulp.task('watch', ['watch:js', 'watch:handlebars', 'watch:css', 'watch:pages']);
+gulp.task('watch', ['watch:js', 'watch:handlebars', 'watch:css']);
