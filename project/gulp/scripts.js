@@ -3,6 +3,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var args = require('yargs').argv;
 
 var handlebars = require('handlebars');
 
@@ -72,9 +73,9 @@ gulp.task('scripts:lint:jscs:fix', function() {
 // handlebars templates
 gulp.task('scripts:handlebars:templates', function() {
   return gulp.src(handlebarsTemplates)
-    .pipe($.debug({
+    .pipe($.if(args.verbose, $.debug({
       title: 'templates'
-    }))
+    })))
     .pipe($.handlebars({
       handlebars: handlebars
     }))
@@ -90,9 +91,9 @@ gulp.task('scripts:handlebars:templates', function() {
 
 gulp.task('scripts:handlebars:partials', function() {
   return gulp.src(handlebarsPartials)
-    .pipe($.debug({
+    .pipe($.if(args.verbose, $.debug({
       title: 'partial'
-    }))
+    })))
     .pipe($.handlebars({
       handlebars: handlebars
     }))
@@ -112,9 +113,9 @@ gulp.task('scripts:handlebars:partials', function() {
 gulp.task('scripts:js', function() {
 
   return gulp.src(src)
-    .pipe($.debug({
+    .pipe($.if(args.verbose, $.debug({
       title: 'scripts:js:'
-    }))
+    })))
     .pipe($.concat('scripts.js'))
     .pipe(gulp.dest(conf.paths.js.dest));
 });
