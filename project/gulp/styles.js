@@ -61,9 +61,12 @@ gulp.task('styles:css', function() {
 
   return gulp.src(src)
     // .pipe($.debug())
+    .pipe($.plumber({
+      errorHandler: config.errorHandler('styles:css')
+    }))
     .pipe($.concat('styles.scss'))
-    .pipe($.sass(sassOptions)).on('error', config.errorHandler('Sass'))
-    .pipe($.autoprefixer({browsers: ['last 2 versions', '> 5%']})).on('error', config.errorHandler('Autoprefixer'))
+    .pipe($.sass(sassOptions))
+    .pipe($.autoprefixer({browsers: ['last 2 versions', '> 5%']}))
     .pipe(gulp.dest(config.paths.css.dest));
 });
 
@@ -74,8 +77,11 @@ gulp.task('libs:css', function() {
 
   return gulp.src(libs)
     // .pipe($.debug())
-    .pipe($.sass(sassOptions)).on('error', config.errorHandler('Sass'))
-    .pipe($.autoprefixer()).on('error', config.errorHandler('Autoprefixer'))
+    .pipe($.plumber({
+      errorHandler: config.errorHandler('libs:css')
+    }))
+    .pipe($.sass(sassOptions))
+    .pipe($.autoprefixer())
     .pipe(gulp.dest(config.paths.css.dest));
 });
 
