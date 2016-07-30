@@ -5,10 +5,11 @@ var runSequence = require('run-sequence');
 var del = require('del');
 
 gulp.task('clean', function() {
-  del('./dist');
+  return del('./dist');
 });
 
-gulp.task('build', function() {
+gulp.task('build', function(done) {
   runSequence('clean',
-    ['styles:build', 'libs:css', 'scripts:build', 'libs:js']);
+    ['styles:build', 'libs:css', 'scripts:build', 'libs:js'],
+    done);
 });

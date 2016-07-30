@@ -10,7 +10,5 @@ fs.readdirSync('./gulp').filter(function(file) {
   require('./gulp/' + file);
 });
 
-// default task is to compile sass
-gulp.task('default', [], function() {
-  gulp.start('build');
+gulp.task('default', ['build'], function() {
 });

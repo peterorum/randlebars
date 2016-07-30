@@ -183,7 +183,6 @@ gulp.task('scripts:watch:handlebars', ['scripts:handlebars'], function() {
   return minify();
 });
 
-
 // wait for js to build before minifying
 gulp.task('scripts:build', ['scripts:handlebars', 'scripts:js'], function() {
   return minify();
