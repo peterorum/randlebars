@@ -14,4 +14,8 @@ body {
 
   @include anchor($text-color);
 
+  a.image-link:hover {
+    opacity: 0.8;
+  }
+
 }

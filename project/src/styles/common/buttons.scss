@@ -16,7 +16,7 @@ button {
   }
 
   &:hover {
-    background-color: lighten($color-primary, 10%);
+    background-color: darken($color-primary, 15%);
 
   }
 }

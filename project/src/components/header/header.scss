@@ -1,6 +1,7 @@
 .container > header {
   @include anchor($color-primary);
 
+  padding-top: 40px;
   color: $color-primary;
   font-family: $sans-serif;
   margin: 0 auto;

@@ -104,6 +104,16 @@ gulp.task('libs:css', function() {
     .pipe(gulp.dest(config.paths.css.dest));
 });
 
+// copy images over
+
+gulp.task('styles:images', function() {
+
+  return gulp.src([path.join(config.paths.css.src, 'images/**/*'), '!' + path.join(config.paths.css.src, 'images/**/*.psd')])
+    .pipe($.imagemin())
+    .pipe(gulp.dest(config.paths.css.images));
+});
+
+
 // build minified css from css
 
 function minify() {

@@ -14,7 +14,8 @@ exports.paths = {
     // dests
     dest: 'dist/css',
     fonts: 'dist/fonts',
-    pages: 'dist/pages'
+    pages: 'dist/pages',
+    images: 'dist/images'
   },
   js: {
     src: 'src',
