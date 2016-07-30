@@ -10,7 +10,7 @@ gulp.task('clean', function() {
 
 gulp.task('build', function(done) {
   runSequence('clean',
-    ['styles:build', 'libs:css', 'scripts:build', 'libs:js'],
+    ['styles:build', 'styles:images', 'libs:css', 'scripts:build', 'libs:js'],
     ['styles:pages'],
     done);
 });
