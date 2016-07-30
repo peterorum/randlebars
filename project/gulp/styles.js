@@ -63,7 +63,7 @@ gulp.task('styles:css', function() {
     // .pipe($.debug())
     .pipe($.concat('styles.scss'))
     .pipe($.sass(sassOptions)).on('error', config.errorHandler('Sass'))
-    .pipe($.autoprefixer()).on('error', config.errorHandler('Autoprefixer'))
+    .pipe($.autoprefixer({browsers: ['last 2 versions', '> 5%']})).on('error', config.errorHandler('Autoprefixer'))
     .pipe(gulp.dest(config.paths.css.dest));
 });
 
