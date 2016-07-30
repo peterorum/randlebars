@@ -5,7 +5,9 @@ var fs = require('fs');
 var gulp = require('gulp');
 var conf = require('./conf');
 
-var $ = require('gulp-load-plugins')();
+var $ = require('gulp-load-plugins')({
+  lazy: true
+});
 
 var src = [
   path.join(conf.paths.css.src, 'styles/variables/**/*.scss'),

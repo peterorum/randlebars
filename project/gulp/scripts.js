@@ -7,7 +7,9 @@ var args = require('yargs').argv;
 
 var handlebars = require('handlebars');
 
-var $ = require('gulp-load-plugins')();
+var $ = require('gulp-load-plugins')({
+  lazy: true
+});
 
 var src = [
   path.join(conf.paths.js.src, '/app/**/*.js'),
