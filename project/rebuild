@@ -1,5 +1,4 @@
 #!/bin/sh
-rm -r dist
 npm install
 bower install
 gulp build
