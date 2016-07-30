@@ -37,17 +37,34 @@ gulp.task('styles:pages', function() {
 
   var templateHtml = fs.readFileSync(path.join(config.paths.css.src, 'pages/page.html'), 'utf8');
 
-  return gulp.src(templates)
+  var injectOptions = {
+    ignorePath: 'dist/',
+    addPrefix: '..',
+    addRootSlash: false,
+  };
+
+  return gulp.src(templates, {
+    read: false
+  })
     .pipe($.tap(function(file) {
       let filename = path.basename(file.path, '.hbs');
 
-      let contents = templateHtml.replace(/<!--\s?insert\s?:\s?filename\s?-->/gi, filename);
+      let contents = templateHtml;
+
+      // insert filename, replacing <!-- insert:filename -->
+      contents = contents.replace(/<!--\s?insert\s?:\s?filename\s?-->/gi, filename);
 
       file.contents = new Buffer(contents);
     }))
     .pipe($.rename({
       extname: '.html'
     }))
+    .pipe($.inject(gulp.src(path.join(config.paths.css.dest, '*.min.css'), {
+      read: false
+    }), injectOptions))
+    .pipe($.inject(gulp.src(path.join(config.paths.js.dest, '*.min.js'), {
+      read: false
+    }), injectOptions))
     .pipe(gulp.dest(config.paths.css.pages));
 });
 
@@ -66,7 +83,9 @@ gulp.task('styles:css', function() {
     }))
     .pipe($.concat('styles.scss'))
     .pipe($.sass(sassOptions))
-    .pipe($.autoprefixer({browsers: ['last 2 versions', '> 5%']}))
+    .pipe($.autoprefixer({
+      browsers: ['last 2 versions', '> 5%']
+    }))
     .pipe(gulp.dest(config.paths.css.dest));
 });
 

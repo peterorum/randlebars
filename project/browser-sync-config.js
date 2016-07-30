@@ -53,7 +53,7 @@ module.exports = {
     "scrollElements": [],
     "scrollElementMapping": [],
     "reloadDelay": 0,
-    "reloadDebounce": 0,
+    "reloadDebounce": 100,
     "plugins": [],
     "injectChanges": true,
     "startPath": 'dist/pages',
