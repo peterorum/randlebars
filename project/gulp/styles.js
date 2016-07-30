@@ -3,28 +3,28 @@
 var path = require('path');
 var fs = require('fs');
 var gulp = require('gulp');
-var conf = require('./conf');
+var config = require('./config');
 
 var $ = require('gulp-load-plugins')({
   lazy: true
 });
 
 var src = [
-  path.join(conf.paths.css.src, 'styles/variables/**/*.scss'),
-  path.join(conf.paths.css.src, 'styles/common/**/*.scss'),
-  path.join(conf.paths.css.src, 'components/**/*.scss')
+  path.join(config.paths.css.src, 'styles/variables/**/*.scss'),
+  path.join(config.paths.css.src, 'styles/common/**/*.scss'),
+  path.join(config.paths.css.src, 'components/**/*.scss')
 ];
 
 var templates = [
-  path.join(conf.paths.css.src, 'pages/**/*.hbs')
+  path.join(config.paths.css.src, 'pages/**/*.hbs')
 ];
 
-var libs = [path.join(conf.paths.css.src, '/styles/libs.scss')];
+var libs = [path.join(config.paths.css.src, '/styles/libs.scss')];
 
 // lint - error checking
 
 gulp.task('styles:lint', function() {
-  gulp.src(path.join(conf.paths.css.src, '/components/**/*.scss'))
+  gulp.src(path.join(config.paths.css.src, '/components/**/*.scss'))
     .pipe($.sassLint())
     .pipe($.sassLint.format())
     .pipe($.sassLint.failOnError())
@@ -35,7 +35,7 @@ gulp.task('styles:pages', function() {
 
   // inject file name into template, replacing <!-- insert:filename -->
 
-  var templateHtml = fs.readFileSync(path.join(conf.paths.css.src, 'pages/page.html'), 'utf8');
+  var templateHtml = fs.readFileSync(path.join(config.paths.css.src, 'pages/page.html'), 'utf8');
 
   return gulp.src(templates)
     .pipe($.tap(function(file) {
@@ -48,7 +48,7 @@ gulp.task('styles:pages', function() {
     .pipe($.rename({
       extname: '.html'
     }))
-    .pipe(gulp.dest(conf.paths.css.pages));
+    .pipe(gulp.dest(config.paths.css.pages));
 });
 
 // build css from sass (except libs)
@@ -62,9 +62,9 @@ gulp.task('styles:css', function() {
   return gulp.src(src)
     // .pipe($.debug())
     .pipe($.concat('styles.scss'))
-    .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
-    .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
-    .pipe(gulp.dest(conf.paths.css.dest));
+    .pipe($.sass(sassOptions)).on('error', config.errorHandler('Sass'))
+    .pipe($.autoprefixer()).on('error', config.errorHandler('Autoprefixer'))
+    .pipe(gulp.dest(config.paths.css.dest));
 });
 
 // build library
@@ -74,16 +74,16 @@ gulp.task('libs:css', function() {
 
   return gulp.src(libs)
     // .pipe($.debug())
-    .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
-    .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
-    .pipe(gulp.dest(conf.paths.css.dest));
+    .pipe($.sass(sassOptions)).on('error', config.errorHandler('Sass'))
+    .pipe($.autoprefixer()).on('error', config.errorHandler('Autoprefixer'))
+    .pipe(gulp.dest(config.paths.css.dest));
 });
 
 // build minified css from css
 
 function minify() {
 
-  return gulp.src([path.join(conf.paths.css.dest, '/**/*.css'), '!' + path.join(conf.paths.css.dest, '/**/*.min.css')])
+  return gulp.src([path.join(config.paths.css.dest, '/**/*.css'), '!' + path.join(config.paths.css.dest, '/**/*.min.css')])
     .pipe($.debug())
     .pipe($.sourcemaps.init())
     .pipe($.cleanCss({}))
@@ -91,7 +91,7 @@ function minify() {
       suffix: '.min'
     }))
     .pipe($.sourcemaps.write('maps'))
-    .pipe(gulp.dest(conf.paths.css.dest));
+    .pipe(gulp.dest(config.paths.css.dest));
 }
 ;
 

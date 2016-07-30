@@ -2,7 +2,7 @@
 
 var path = require('path');
 var gulp = require('gulp');
-var conf = require('./conf');
+var config = require('./config');
 var args = require('yargs').argv;
 
 var handlebars = require('handlebars');
@@ -12,21 +12,21 @@ var $ = require('gulp-load-plugins')({
 });
 
 var src = [
-  path.join(conf.paths.js.src, '/app/**/*.js'),
-  path.join(conf.paths.js.src, '/components/**/*.js'),
-  path.join(conf.paths.js.src, '/pages/**/*.js')
+  path.join(config.paths.js.src, '/app/**/*.js'),
+  path.join(config.paths.js.src, '/components/**/*.js'),
+  path.join(config.paths.js.src, '/pages/**/*.js')
 ];
 
 // handlebars
 
 // pages
 var handlebarsTemplates = [
-  path.join(conf.paths.js.src, 'pages/**/*.hbs')
+  path.join(config.paths.js.src, 'pages/**/*.hbs')
 ];
 
 // components
 var handlebarsPartials = [
-  path.join(conf.paths.js.src, 'components/**/*.hbs')
+  path.join(config.paths.js.src, 'components/**/*.hbs')
 ];
 
 
@@ -34,7 +34,7 @@ var handlebarsPartials = [
 // after change, run gulp build
 
 var libs = [
-  path.join(conf.paths.js.libs, 'handlebars/handlebars.runtime.min.js')
+  path.join(config.paths.js.libs, 'handlebars/handlebars.runtime.min.js')
 ];
 
 // expected as individual modules
@@ -69,7 +69,7 @@ gulp.task('scripts:lint:jscs:fix', function() {
     .pipe($.jscs({
       fix: true
     }))
-    .pipe(gulp.dest(path.join(conf.paths.js.src, '/')));
+    .pipe(gulp.dest(path.join(config.paths.js.src, '/')));
 });
 
 // handlebars templates
@@ -88,7 +88,7 @@ gulp.task('scripts:handlebars:templates', function() {
       noRedeclare: true, // Avoid duplicate declarations
     }))
     .pipe($.concat('templates.js'))
-    .pipe(gulp.dest(conf.paths.js.dest));
+    .pipe(gulp.dest(config.paths.js.dest));
 });
 
 gulp.task('scripts:handlebars:partials', function() {
@@ -107,7 +107,7 @@ gulp.task('scripts:handlebars:partials', function() {
       }
     }))
     .pipe($.concat('partials.js'))
-    .pipe(gulp.dest(conf.paths.js.dest));
+    .pipe(gulp.dest(config.paths.js.dest));
 });
 
 // join all js
@@ -119,7 +119,7 @@ gulp.task('scripts:js', function() {
       title: 'scripts:js:'
     })))
     .pipe($.concat('scripts.js'))
-    .pipe(gulp.dest(conf.paths.js.dest));
+    .pipe(gulp.dest(config.paths.js.dest));
 });
 
 // join all specific library js (must already be minimized)
@@ -129,7 +129,7 @@ gulp.task('libs:js:min', function() {
 
   return gulp.src(libs)
     .pipe($.concat('libs.min.js'))
-    .pipe(gulp.dest(conf.paths.js.dest));
+    .pipe(gulp.dest(config.paths.js.dest));
 });
 
 // // modules that must be individual
@@ -139,16 +139,16 @@ gulp.task('libs:js:separate', function() {
   // do not run through babel
 
   return gulp.src(separateLibs)
-    .pipe(gulp.dest(conf.paths.js.dest));
+    .pipe(gulp.dest(config.paths.js.dest));
 });
 
 // build minified js
 
 function minify() {
 
-  return gulp.src([path.join(conf.paths.js.dest, '/partials.js'),
-    path.join(conf.paths.js.dest, '/templates.js'),
-    path.join(conf.paths.js.dest, '/scripts.js')])
+  return gulp.src([path.join(config.paths.js.dest, '/partials.js'),
+    path.join(config.paths.js.dest, '/templates.js'),
+    path.join(config.paths.js.dest, '/scripts.js')])
     .pipe($.concat('scripts.js'))
     .pipe($.sourcemaps.init())
     .pipe($.babel({
@@ -159,7 +159,7 @@ function minify() {
       suffix: '.min'
     }))
     .pipe($.sourcemaps.write('maps'))
-    .pipe(gulp.dest(conf.paths.js.dest));
+    .pipe(gulp.dest(config.paths.js.dest));
 };
 
 gulp.task('scripts:minify', function() {

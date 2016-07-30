@@ -2,7 +2,9 @@
 
 'use strict';
 
-var gutil = require('gulp-util');
+var $ = require('gulp-load-plugins')({
+  lazy: true
+});
 
 exports.paths = {
   css: {
@@ -22,12 +24,12 @@ exports.paths = {
 };
 
 /**
- *  Common implementation for an error handler of a Gulp plugin
+ *  Common implementation for an error handler of a gulp plugin
  */
 exports.errorHandler = function(title) {
 
   return function(err) {
-    gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
+    $.util.log($.util.colors.red('[' + title + ']'), err.toString());
     this.emit('end');
   };
 };
