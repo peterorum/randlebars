@@ -4,40 +4,24 @@ var path = require('path');
 var gulp = require('gulp');
 var config = require('./config');
 
-var $ = require('gulp-load-plugins')({
-  lazy: true
-});
-
-// watch js source
 gulp.task('watch:js', function() {
-  $.watch([path.join(config.paths.js.src, '/**/*.js')], $.batch(function(events, done) {
-    gulp.start(['scripts:lint', 'scripts:build'], done);
-  }));
+  gulp.watch([path.join(config.paths.js.src, '/**/*.js')], ['scripts:lint', 'scripts:build']);
 });
 
 gulp.task('watch:handlebars:templates', function() {
-  $.watch([path.join(config.paths.js.src, '/pages/**/*.hbs')], $.batch(function(events, done) {
-    gulp.start(['scripts:handlebars:templates'], done);
-  }));
+  gulp.watch([path.join(config.paths.js.src, '/pages/**/*.hbs')], ['scripts:watch:handlebars:templates']);
 });
 
 gulp.task('watch:handlebars:partials', function() {
-  $.watch([path.join(config.paths.js.src, '/components/**/*.hbs')], $.batch(function(events, done) {
-    gulp.start(['scripts:handlebars:partials'], done);
-  }));
+  gulp.watch([path.join(config.paths.js.src, '/components/**/*.hbs')], ['scripts:watch:handlebars:partials']);
 });
 
-
 gulp.task('watch:pages', function() {
-  $.watch([path.join(config.paths.js.src, '/pages/**/*.html')], $.batch(function(events, done) {
-    gulp.start(['styles:pages'], done);
-  }));
+  gulp.watch([path.join(config.paths.js.src, '/pages/**/*.html')], ['styles:pages']);
 });
 
 gulp.task('watch:css', function() {
-  $.watch(path.join(config.paths.css.src, '/**/*.scss'), $.batch(function(events, done) {
-    gulp.start(['styles:lint', 'styles:build'], done);
-  }));
+  gulp.watch(path.join(config.paths.css.src, '/**/*.scss'),['styles:lint', 'styles:build']);
 });
 
 gulp.task('watch', ['watch:js', 'watch:handlebars:templates', 'watch:handlebars:partials', 'watch:css', 'watch:pages']);

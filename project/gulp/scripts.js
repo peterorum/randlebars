@@ -75,9 +75,9 @@ gulp.task('scripts:lint:jscs:fix', function() {
 // handlebars templates
 gulp.task('scripts:handlebars:templates', function() {
   return gulp.src(handlebarsTemplates)
-    .pipe($.if(args.verbose, $.debug({
-      title: 'templates'
-    })))
+    // .pipe($.if(args.verbose, $.debug({
+    //   title: 'templates'
+    // })))
     .pipe($.handlebars({
       handlebars: handlebars
     }))
@@ -179,7 +179,11 @@ gulp.task('scripts:handlebars', ['scripts:handlebars:templates', 'scripts:handle
 // wait for js to build before minifying
 
 // watches
-gulp.task('scripts:watch:handlebars', ['scripts:handlebars'], function() {
+gulp.task('scripts:watch:handlebars:templates', ['scripts:handlebars:templates'], function() {
+  return minify();
+});
+
+gulp.task('scripts:watch:handlebars:partials', ['scripts:handlebars:partials'], function() {
   return minify();
 });
 
