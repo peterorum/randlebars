@@ -24,6 +24,15 @@ exports.paths = {
   }
 };
 
+exports.htmlmin = {
+  collapseWhitespace: true,
+  html5: true,
+  minifyCSS: true,
+  minifyJS: true,
+  quoteCharacter: "'",
+  removeComments: true
+};
+
 /**
  *  Common implementation for an error handler of a gulp plugin
  */

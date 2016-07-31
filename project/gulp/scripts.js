@@ -96,6 +96,7 @@ gulp.task('scripts:handlebars:partials', function() {
     .pipe($.if(args.verbose, $.debug({
       title: 'partial'
     })))
+    .pipe($.htmlmin(config.htmlmin))
     .pipe($.handlebars({
       handlebars: handlebars
     }))
