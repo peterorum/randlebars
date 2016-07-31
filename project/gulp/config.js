@@ -7,20 +7,25 @@ var $ = require('gulp-load-plugins')({
 });
 
 exports.paths = {
+  src: 'src/',
+  dev: '.tmp/',
+  prod: 'dist/',
+  libs: 'bower_components/',
+
   css: {
     // src
-    src: 'src',
-    libs: 'bower_components',
+    src: 'src/',
+    libs: 'bower_components/',
     // dests
-    dest: 'dist/css',
-    fonts: 'dist/fonts',
-    pages: 'dist/pages',
+    dest: 'dist/css/',
+    fonts: 'dist/fonts/',
+    pages: 'dist/pages/',
     images: 'dist/images'
   },
   js: {
-    src: 'src',
-    dest: 'dist/js',
-    libs: 'bower_components'
+    src: 'src/',
+    dest: 'dist/js/',
+    libs: 'bower_components/'
   }
 };
 

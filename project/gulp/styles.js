@@ -1,7 +1,6 @@
 'use strict';
 
 var path = require('path');
-var fs = require('fs');
 var gulp = require('gulp');
 var config = require('./config');
 
@@ -10,63 +9,20 @@ var $ = require('gulp-load-plugins')({
 });
 
 var src = [
-  path.join(config.paths.css.src, 'styles/variables/**/*.scss'),
-  path.join(config.paths.css.src, 'styles/common/**/*.scss'),
-  path.join(config.paths.css.src, 'components/**/*.scss')
+  path.join(config.paths.src, 'styles/variables/**/*.scss'),
+  path.join(config.paths.src, 'styles/common/**/*.scss'),
+  path.join(config.paths.src, 'components/**/*.scss')
 ];
 
-var templates = [
-  path.join(config.paths.css.src, 'pages/**/*.hbs')
-];
-
-var libs = [path.join(config.paths.css.src, '/styles/libs.scss')];
+var libs = [path.join(config.paths.src, '/styles/libs.scss')];
 
 // lint - error checking
 
 gulp.task('styles:lint', function() {
-  gulp.src(path.join(config.paths.css.src, '/components/**/*.scss'))
+  gulp.src(path.join(config.paths.src, '/components/**/*.scss'))
     .pipe($.sassLint())
     .pipe($.sassLint.format())
     .pipe($.sassLint.failOnError())
-});
-
-// make an html page from template name
-gulp.task('styles:pages', function() {
-
-  // inject file name into template, replacing <!-- insert:filename -->
-
-  var templateHtml = fs.readFileSync(path.join(config.paths.css.src, 'pages/page.html'), 'utf8');
-
-  var injectOptions = {
-    ignorePath: 'dist/',
-    addPrefix: '..',
-    addRootSlash: false,
-  };
-
-  return gulp.src(templates, {
-    read: false
-  })
-    .pipe($.tap(function(file) {
-      let filename = path.basename(file.path, '.hbs');
-
-      let contents = templateHtml;
-
-      // insert filename, replacing <!-- insert:filename -->
-      contents = contents.replace(/<!--\s?insert\s?:\s?filename\s?-->/gi, filename);
-
-      file.contents = new Buffer(contents);
-    }))
-    .pipe($.rename({
-      extname: '.html'
-    }))
-    .pipe($.inject(gulp.src(path.join(config.paths.css.dest, '*.min.css'), {
-      read: false
-    }), injectOptions))
-    .pipe($.inject(gulp.src(path.join(config.paths.js.dest, '*.min.js'), {
-      read: false
-    }), injectOptions))
-    .pipe($.htmlmin(config.htmlmin))
-    .pipe(gulp.dest(config.paths.css.pages));
 });
 
 // build css from sass (except libs)
@@ -87,7 +43,7 @@ gulp.task('styles:css', function() {
     .pipe($.autoprefixer({
       browsers: ['last 2 versions', '> 5%']
     }))
-    .pipe(gulp.dest(config.paths.css.dest));
+    .pipe(gulp.dest(path.join(config.paths.dev, 'css')));
 });
 
 // build library
@@ -102,16 +58,16 @@ gulp.task('libs:css', function() {
     }))
     .pipe($.sass(sassOptions))
     .pipe($.autoprefixer())
-    .pipe(gulp.dest(config.paths.css.dest));
+    .pipe(gulp.dest(path.join(config.paths.dev, 'css')));
 });
 
 // copy images over
 
-gulp.task('styles:images', function() {
+gulp.task('images:build', function() {
 
-  return gulp.src([path.join(config.paths.css.src, 'images/**/*'), '!' + path.join(config.paths.css.src, 'images/**/*.psd')])
+  return gulp.src([path.join(config.paths.src, 'images/**/*'), '!' + path.join(config.paths.src, 'images/**/*.psd')])
     .pipe($.imagemin())
-    .pipe(gulp.dest(config.paths.css.images));
+    .pipe(gulp.dest(path.join(config.paths.dev, 'images')));
 });
 
 
@@ -119,7 +75,7 @@ gulp.task('styles:images', function() {
 
 function minify() {
 
-  return gulp.src([path.join(config.paths.css.dest, '/**/*.css'), '!' + path.join(config.paths.css.dest, '/**/*.min.css')])
+  return gulp.src([path.join(config.paths.dev, '/**/*.css'), '!' + path.join(config.paths.dev, '/**/*.min.css')])
     .pipe($.debug())
     .pipe($.sourcemaps.init())
     .pipe($.cleanCss({}))
@@ -127,7 +83,7 @@ function minify() {
       suffix: '.min'
     }))
     .pipe($.sourcemaps.write('maps'))
-    .pipe(gulp.dest(config.paths.css.dest));
+    .pipe(path.join(gulp.dest(config.paths.dev), 'css'));
 }
 ;
 
@@ -137,7 +93,4 @@ gulp.task('styles:minify', function() {
 
 });
 
-// wait for css to build before minifying
-gulp.task('styles:build', ['styles:css', 'styles:pages'], function() {
-  return minify();
-});
+gulp.task('styles:build', ['styles:lint', 'styles:css']);
