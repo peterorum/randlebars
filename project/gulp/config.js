@@ -42,13 +42,11 @@ exports.htmlmin = {
 
 exports.inject = {
   ignorePath: '.tmp/',
-  addPrefix: '..',
   addRootSlash: false,
 };
 
 exports.injectLib = {
   ignorePath: '.tmp/',
-  addPrefix: '..',
   addRootSlash: false,
   starttag:'<!-- inject:jslibs -->'
 };

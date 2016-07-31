@@ -46,7 +46,7 @@ gulp.task('pages:templates', function() {
     .pipe($.inject(gulp.src([path.join(config.paths.dev, 'js/*.js'), '!' + path.join(config.paths.dev, 'js/libs.js')], {
       read: false
     }), config.inject))
-    .pipe(gulp.dest(path.join(config.paths.dev, 'pages')));
+    .pipe(gulp.dest(config.paths.dev));
 });
 
 gulp.task('pages:build', [ 'pages:templates']);

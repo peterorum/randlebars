@@ -17,9 +17,9 @@ gulp.task('clean:prod', function() {
 gulp.task('build:optimized', function() {
 
   return gulp
-    .src(path.join(config.paths.dev, 'pages/**/*.html'))
+    .src(path.join(config.paths.dev, '*.html'))
     .pipe($.plumber())
-    .pipe($.useref({searchPath: [path.join(config.paths.dev, 'css'), path.join(config.paths.dev, 'js')]}))
+    .pipe($.useref({searchPath: config.paths.dev}))
     .pipe($.if('*.css', $.cleanCss()))
     // do not compile or minify libraries
     .pipe($.if('**/scripts.js', $.babel({
