@@ -29,6 +29,8 @@ exports.paths = {
   }
 };
 
+// options
+
 exports.htmlmin = {
   collapseWhitespace: true,
   html5: true,
@@ -36,6 +38,19 @@ exports.htmlmin = {
   minifyJS: true,
   quoteCharacter: "'",
   removeComments: true
+};
+
+exports.inject = {
+  ignorePath: '.tmp/',
+  addPrefix: '..',
+  addRootSlash: false,
+};
+
+exports.injectLib = {
+  ignorePath: '.tmp/',
+  addPrefix: '..',
+  addRootSlash: false,
+  starttag:'<!-- inject:jslibs -->'
 };
 
 /**

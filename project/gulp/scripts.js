@@ -116,6 +116,9 @@ gulp.task('handlebars:partials', function() {
 
 gulp.task('scripts:js', function() {
 
+  // skip babel as it's slow
+  // means only developing in chrome
+
   return gulp.src(src)
     .pipe($.if(args.verbose, $.debug({
       title: 'scripts:js:'
