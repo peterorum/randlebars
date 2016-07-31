@@ -74,7 +74,7 @@ gulp.task('scripts:lint:jscs:fix', function() {
 });
 
 // handlebars templates
-gulp.task('scripts:handlebars:templates', function() {
+gulp.task('handlebars:templates', function() {
   return gulp.src(handlebarsTemplates)
     // .pipe($.if(args.verbose, $.debug({
     //   title: 'templates'
@@ -92,7 +92,7 @@ gulp.task('scripts:handlebars:templates', function() {
     .pipe(gulp.dest(path.join(config.paths.dev, 'js')));
 });
 
-gulp.task('scripts:handlebars:partials', function() {
+gulp.task('handlebars:partials', function() {
   return gulp.src(handlebarsPartials)
     .pipe($.if(args.verbose, $.debug({
       title: 'partial'
@@ -180,16 +180,16 @@ gulp.task('scripts:fix', ['scripts:lint:jscs:fix']);
 
 gulp.task('libs:js:build', ['libs:js', 'libs:js:separate']);
 
-gulp.task('handlebars:build', ['scripts:handlebars:templates', 'scripts:handlebars:partials']);
+gulp.task('handlebars:build', ['handlebars:templates', 'handlebars:partials']);
 
 // wait for js to build before minifying
 
 // watches
-// gulp.task('scripts:handlebars:templates:build', ['scripts:handlebars:templates'], function() {
+// gulp.task('handlebars:templates:build', ['handlebars:templates'], function() {
 //   return minify();
 // });
 
-// gulp.task('scripts:handlebars:partials:build', ['scripts:handlebars:partials'], function() {
+// gulp.task('handlebars:partials:build', ['handlebars:partials'], function() {
 //   return minify();
 // });
 
