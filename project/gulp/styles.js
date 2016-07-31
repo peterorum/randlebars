@@ -65,6 +65,7 @@ gulp.task('styles:pages', function() {
     .pipe($.inject(gulp.src(path.join(config.paths.js.dest, '*.min.js'), {
       read: false
     }), injectOptions))
+    .pipe($.minifyHtml())
     .pipe(gulp.dest(config.paths.css.pages));
 });
 
