@@ -19,9 +19,9 @@ gulp.task('build:optimized', function() {
   return gulp
     .src(path.join(config.paths.dev, 'pages/**/*.html'))
     .pipe($.plumber())
-    // .pipe($.useref({searchPath: config.paths.dev}))
     .pipe($.useref({searchPath: [path.join(config.paths.dev, 'css'), path.join(config.paths.dev, 'js')]}))
     .pipe($.if('*.css', $.cleanCss()))
+    // do not compile or minify libraries
     .pipe($.if('**/scripts.js', $.babel({
       presets: ['es2015']
     })))
@@ -41,7 +41,6 @@ gulp.task('build:assets', function() {
     .src([path.join(config.paths.dev, 'images/*.*')])
     .pipe(gulp.dest(path.join(config.paths.prod, 'images')));
 });
-
 
 gulp.task('build:dev', function(done) {
   runSequence('clean:dev',
