@@ -20,6 +20,7 @@ gulp.task('build:optimized', function() {
     .src(path.join(config.paths.dev, '*.html'))
     .pipe($.plumber())
     .pipe($.useref({searchPath: config.paths.dev}))
+    .pipe($.if(/.*[js|css]$/, $.rev()))
     .pipe($.if(/.*[js|css]$/, $.sourcemaps.init()))
     .pipe($.if('*.css', $.cleanCss()))
     // do not transpile or minify libraries
@@ -29,11 +30,7 @@ gulp.task('build:optimized', function() {
     .pipe($.if('**/scripts.min.js', $.uglify()))
     .pipe($.if(/.*[js|css]$/, $.sourcemaps.write('maps')))
     .pipe($.if('*.html', $.htmlmin(config.htmlmin)))
-    // // Take inventory of the file names for future rev numbers
-    // .pipe($.rev())
-    // // Apply the concat and file replacement with useref
-    // // Replace the file names in the html with rev numbers
-    // .pipe($.revReplace())
+    .pipe($.revReplace())
     .pipe(gulp.dest(config.paths.prod));
 });
 
