@@ -22,7 +22,7 @@ gulp.task('build:optimized', function() {
     .pipe($.useref({searchPath: config.paths.dev}))
     .pipe($.if(/.*[js|css]$/, $.sourcemaps.init()))
     .pipe($.if('*.css', $.cleanCss()))
-    // do not compile or minify libraries
+    // do not transpile or minify libraries
     .pipe($.if('**/scripts.min.js', $.babel({
       presets: ['es2015']
     })))
