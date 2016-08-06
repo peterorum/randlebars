@@ -14,36 +14,35 @@ gulp.task('clean:prod', function() {
   return del(config.paths.prod);
 });
 
+gulp.task('build:optimize:scripts', function() {
 
-gulp.task('build:optimize:css', function() {
+    var jsFilter = $.filter(config.paths.dev + '**/*.js', { restore: true });
+    var cssFilter = $.filter(config.paths.dev + '**/*.css', { restore: true });
 
-  return gulp
-    .src(path.join(config.paths.dev, 'index.html'))
-    .pipe($.plumber())
-    .pipe($.useref({searchPath: config.paths.dev }))
-    .pipe($.filter(config.paths.dev + '**/*.css'))
-    .pipe($.rev())
-    .pipe($.sourcemaps.init())
-    .pipe($.cleanCss())
-    .pipe($.sourcemaps.write('maps'))
-    .pipe(gulp.dest(config.paths.prod));
-});
-
-gulp.task('build:optimize:js', function() {
+    var customScripts = /.*scripts-.*\.js$/;
 
   return gulp
     .src(path.join(config.paths.dev, 'index.html'))
     .pipe($.plumber())
     .pipe($.useref({searchPath: [config.paths.dev, config.paths.src] }))
-    .pipe($.filter(config.paths.dev + '**/*.js'))
+    // js
+    .pipe(jsFilter)
     .pipe($.rev())
     .pipe($.sourcemaps.init())
     // only transpile or minify custom js
-    .pipe($.if(/.*scripts-.*\.js$/, $.babel({
+    .pipe($.if(customScripts, $.babel({
       presets: ['es2015']
     })))
-    .pipe($.if(/.*scripts-.*\.js$/, $.uglify()))
+    .pipe($.if(customScripts, $.uglify()))
     .pipe($.sourcemaps.write('maps'))
+    .pipe(jsFilter.restore)
+    // css
+    // (sitemaps don't work with current versions of packages)
+    .pipe(cssFilter)
+    .pipe($.rev())
+    .pipe($.cleanCss())
+    .pipe(cssFilter.restore)
+    // writw
     .pipe(gulp.dest(config.paths.prod));
 });
 
@@ -77,7 +76,7 @@ gulp.task('build:prod', function(done) {
 
   runSequence('clean:prod',
     'build:dev',
-    ['build:optimize:html', 'build:optimize:js', 'build:optimize:css', 'build:assets'],
+    ['build:optimize:html', 'build:optimize:scripts', 'build:assets'],
     done);
 });
 
