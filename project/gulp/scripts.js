@@ -185,21 +185,4 @@ gulp.task('libs:js:build', ['libs:js', 'libs:js:separate']);
 
 gulp.task('handlebars:build', ['handlebars:templates', 'handlebars:partials']);
 
-// wait for js to build before minifying
-
-// watches
-// gulp.task('handlebars:templates:build', ['handlebars:templates'], function() {
-//   return minify();
-// });
-
-// gulp.task('handlebars:partials:build', ['handlebars:partials'], function() {
-//   return minify();
-// });
-
-// wait for js to build before minifying
 gulp.task('scripts:build', ['scripts:js', 'handlebars:build']);
-
-// re-minify after handlebars compilation
-// gulp.task('scripts:build:minify', [], function() {
-//   return minify();
-// });

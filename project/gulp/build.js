@@ -20,15 +20,14 @@ gulp.task('build:optimized', function() {
     .src(path.join(config.paths.dev, '*.html'))
     .pipe($.plumber())
     .pipe($.useref({searchPath: config.paths.dev}))
-    // .pipe($.debug({title: 'optimize'}))
-    // .pipe($.debug({title: 'optimize'}))
+    .pipe($.if(/.*[js|css]$/, $.sourcemaps.init()))
     .pipe($.if('*.css', $.cleanCss()))
     // do not compile or minify libraries
     .pipe($.if('**/scripts.min.js', $.babel({
       presets: ['es2015']
     })))
-    // .pipe($.if('**/scripts.min.js', $.debug({title: 'minify scripts.js'})))
     .pipe($.if('**/scripts.min.js', $.uglify()))
+    .pipe($.if(/.*[js|css]$/, $.sourcemaps.write('maps')))
     .pipe($.if('*.html', $.htmlmin(config.htmlmin)))
     // // Take inventory of the file names for future rev numbers
     // .pipe($.rev())
