@@ -14,7 +14,7 @@
   var fs = require('fs');
   var path = require('path');
 
-  let htmlPath = 'dist/pages/';
+  let htmlPath = 'dist/';
 
   //--------- serve a file
 
