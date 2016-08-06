@@ -14,25 +14,49 @@ gulp.task('clean:prod', function() {
   return del(config.paths.prod);
 });
 
-gulp.task('build:optimized', function() {
+
+gulp.task('build:optimize:css', function() {
+
+  return gulp
+    .src(path.join(config.paths.dev, 'index.html'))
+    .pipe($.plumber())
+    .pipe($.useref({searchPath: config.paths.dev }))
+    .pipe($.filter(config.paths.dev + '**/*.css'))
+    .pipe($.rev())
+    .pipe($.sourcemaps.init())
+    .pipe($.cleanCss())
+    .pipe($.sourcemaps.write('maps'))
+    .pipe(gulp.dest(config.paths.prod));
+});
+
+gulp.task('build:optimize:js', function() {
+
+  return gulp
+    .src(path.join(config.paths.dev, 'index.html'))
+    .pipe($.plumber())
+    .pipe($.useref({searchPath: [config.paths.dev, config.paths.src] }))
+    .pipe($.filter(config.paths.dev + '**/*.js'))
+    .pipe($.rev())
+    .pipe($.sourcemaps.init())
+    // only transpile or minify custom js
+    .pipe($.if(/.*scripts-.*\.js$/, $.babel({
+      presets: ['es2015']
+    })))
+    .pipe($.if(/.*scripts-.*\.js$/, $.uglify()))
+    .pipe($.sourcemaps.write('maps'))
+    .pipe(gulp.dest(config.paths.prod));
+});
+
+gulp.task('build:optimize:html', function() {
 
   return gulp
     .src(path.join(config.paths.dev, '*.html'))
     .pipe($.plumber())
     .pipe($.useref({searchPath: [config.paths.dev, config.paths.src] }))
     .pipe($.if(/.*[js|css]$/, $.rev()))
-    .pipe($.debug({title: 'optimize'}))
-    .pipe($.if(/.*[js|css]$/, $.sourcemaps.init()))
-    .pipe($.if('*.css', $.cleanCss()))
-    // only transpile or minify custom js
-    .pipe($.if(/.*scripts-.*\.js$/, $.babel({
-      presets: ['es2015']
-    })))
-    .pipe($.if(/.*scripts-.*\.js$/, $.uglify()))
-    .pipe($.if(/.*[js|css]$/, $.sourcemaps.write('maps')))
     .pipe($.if('*.html', $.htmlmin(config.htmlmin)))
     .pipe($.revReplace())
-    .pipe(gulp.dest(config.paths.prod));
+    .pipe($.if(/.*\.html$/, gulp.dest(config.paths.prod)));
 });
 
 gulp.task('build:assets', function() {
@@ -53,8 +77,7 @@ gulp.task('build:prod', function(done) {
 
   runSequence('clean:prod',
     'build:dev',
-    'build:optimized',
-    'build:assets',
+    ['build:optimize:html', 'build:optimize:js', 'build:optimize:css', 'build:assets'],
     done);
 });
 
