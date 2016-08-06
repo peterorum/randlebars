@@ -6,6 +6,8 @@ var $ = require('gulp-load-plugins')({
   lazy: true
 });
 
+var _ = require('lodash');
+
 exports.paths = {
   src: 'src/',
   dev: '.tmp/',
@@ -45,17 +47,11 @@ exports.inject = {
   addRootSlash: false,
 };
 
-exports.injectCssLib = {
-  ignorePath: '.tmp/',
-  addRootSlash: false,
-  starttag:'<!-- inject:csslibs -->'
-};
+exports.injectCssLib = _.clone(exports.inject);
+exports.injectCssLib.starttag = '<!-- inject:csslibs -->';
 
-exports.injectJsLib = {
-  ignorePath: '.tmp/',
-  addRootSlash: false,
-  starttag:'<!-- inject:jslibs -->'
-};
+exports.injectJsLib = _.clone(exports.inject);
+exports.injectJsLib.starttag = '<!-- inject:jslibs -->';
 
 /**
  *  Common implementation for an error handler of a gulp plugin

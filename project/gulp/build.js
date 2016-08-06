@@ -59,3 +59,5 @@ gulp.task('build:prod', function(done) {
     'build:assets',
     done);
 });
+
+gulp.task('build', ['build:prod']);
