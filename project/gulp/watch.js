@@ -9,7 +9,7 @@ gulp.task('watch:css', function() {
 });
 
 gulp.task('watch:js', function() {
-  gulp.watch([path.join(config.paths.src, '**/*.js')], ['scripts:lint', 'scripts:js']);
+  gulp.watch([path.join(config.paths.src, '**/*.js')], ['scripts:lint']);
 });
 
 gulp.task('watch:handlebars:templates', function() {

@@ -12,12 +12,6 @@ var $ = require('gulp-load-plugins')({
   lazy: true
 });
 
-var src = [
-  path.join(config.paths.src, '/app/**/*.js'),
-  path.join(config.paths.src, '/components/**/*.js'),
-  path.join(config.paths.src, '/pages/**/*.js')
-];
-
 // handlebars
 
 // pages
@@ -45,7 +39,7 @@ var separateLibs = [];
 
 gulp.task('scripts:lint:eslint', function() {
 
-  return gulp.src(src)
+  return gulp.src(config.jsSrc())
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.eslint.failAfterError());
@@ -55,7 +49,7 @@ gulp.task('scripts:lint:eslint', function() {
 
 gulp.task('scripts:lint:jscs', function() {
 
-  return gulp.src(src)
+  return gulp.src(config.jsSrc())
     .pipe($.jscs())
     .pipe($.jscs.reporter())
     .pipe($.jscs.reporter('fail'));
@@ -66,7 +60,7 @@ gulp.task('scripts:lint:jscs', function() {
 
 gulp.task('scripts:lint:jscs:fix', function() {
 
-  return gulp.src(src)
+  return gulp.src(config.jsSrc())
     .pipe($.jscs({
       fix: true
     }))
@@ -112,20 +106,20 @@ gulp.task('handlebars:partials', function() {
     .pipe(gulp.dest(path.join(config.paths.dev, 'js')));
 });
 
-// join all js
+// // join all js
 
-gulp.task('scripts:js', function() {
+// gulp.task('scripts:js', function() {
 
-  // skip babel as it's slow
-  // means only developing in chrome
+//   // skip babel as it's slow
+//   // means only developing in chrome
 
-  return gulp.src(src)
-    .pipe($.if(args.verbose, $.debug({
-      title: 'scripts:js:'
-    })))
-    .pipe($.concat('scripts.js'))
-    .pipe(gulp.dest(path.join(config.paths.dev, 'js')));
-});
+//   return gulp.src(config.jsSrc())
+//     .pipe($.if(args.verbose, $.debug({
+//       title: 'scripts:js:'
+//     })))
+//     .pipe($.concat('scripts.js'))
+//     .pipe(gulp.dest(path.join(config.paths.dev, 'js')));
+// });
 
 // join all specific library js (must already be minimized)
 // doesn't change often, so not in watch. just gulp build
@@ -185,4 +179,4 @@ gulp.task('libs:js:build', ['libs:js', 'libs:js:separate']);
 
 gulp.task('handlebars:build', ['handlebars:templates', 'handlebars:partials']);
 
-gulp.task('scripts:build', ['scripts:js', 'handlebars:build']);
+gulp.task('scripts:build', [/* 'scripts:js', */ 'handlebars:build']);

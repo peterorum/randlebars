@@ -46,9 +46,14 @@ gulp.task('pages:templates', function() {
     .pipe($.inject(gulp.src(path.join(config.paths.dev, 'js/libs.js'), {
       read: false
     }), config.injectJsLib))
-    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'js/*.js'), '!' + path.join(config.paths.dev, 'js/libs.js')], {
+    // handlebats templates & partials
+    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'js/templates.js'), path.join(config.paths.dev, 'js/partials.js')], {
       read: false
-    }), config.inject))
+    }), config.injectHandlebars))
+    // actual source (apps, components, pages)
+    .pipe($.inject(gulp.src([path.join(config.paths.src, '**/*.js')], {
+      read: false
+    }), config.injectJsLocal))
     .pipe(gulp.dest(config.paths.dev));
 });
 

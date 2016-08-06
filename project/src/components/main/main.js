@@ -26,4 +26,5 @@
 
     $('#word').fadeIn();
   }
+
 })(jQuery);

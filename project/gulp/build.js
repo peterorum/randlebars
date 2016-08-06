@@ -19,15 +19,16 @@ gulp.task('build:optimized', function() {
   return gulp
     .src(path.join(config.paths.dev, '*.html'))
     .pipe($.plumber())
-    .pipe($.useref({searchPath: config.paths.dev}))
+    .pipe($.useref({searchPath: [config.paths.dev, config.paths.src] }))
     .pipe($.if(/.*[js|css]$/, $.rev()))
+    .pipe($.debug({title: 'optimize'}))
     .pipe($.if(/.*[js|css]$/, $.sourcemaps.init()))
     .pipe($.if('*.css', $.cleanCss()))
-    // do not transpile or minify libraries
-    .pipe($.if('**/scripts.min.js', $.babel({
+    // only transpile or minify custom js
+    .pipe($.if(/.*scripts-.*\.js$/, $.babel({
       presets: ['es2015']
     })))
-    .pipe($.if('**/scripts.min.js', $.uglify()))
+    .pipe($.if(/.*scripts-.*\.js$/, $.uglify()))
     .pipe($.if(/.*[js|css]$/, $.sourcemaps.write('maps')))
     .pipe($.if('*.html', $.htmlmin(config.htmlmin)))
     .pipe($.revReplace())

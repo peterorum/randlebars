@@ -6,6 +6,7 @@ var $ = require('gulp-load-plugins')({
   lazy: true
 });
 
+var path = require('path');
 var _ = require('lodash');
 
 exports.paths = {
@@ -31,6 +32,13 @@ exports.paths = {
   }
 };
 
+exports.jsSrc = function() {
+  return [
+    path.join(exports.paths.src, '/app/**/*.js'),
+    path.join(exports.paths.src, '/components/**/*.js')
+  ];
+};
+
 // options
 
 exports.htmlmin = {
@@ -52,6 +60,13 @@ exports.injectCssLib.starttag = '<!-- inject:csslibs -->';
 
 exports.injectJsLib = _.clone(exports.inject);
 exports.injectJsLib.starttag = '<!-- inject:jslibs -->';
+
+// templates & partials
+exports.injectHandlebars = _.clone(exports.inject);
+exports.injectHandlebars.starttag = '<!-- inject:handlebars -->';
+
+exports.injectJsLocal = _.clone(exports.inject);
+exports.injectJsLocal.addPrefix = '..';
 
 /**
  *  Common implementation for an error handler of a gulp plugin
