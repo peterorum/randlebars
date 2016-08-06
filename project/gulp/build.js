@@ -37,12 +37,11 @@ gulp.task('build:optimize:scripts', function() {
     .pipe($.sourcemaps.write('maps'))
     .pipe(jsFilter.restore)
     // css
-    // (sitemaps don't work with current versions of packages)
     .pipe(cssFilter)
     .pipe($.rev())
     .pipe($.cleanCss())
     .pipe(cssFilter.restore)
-    // writw
+    // write
     .pipe(gulp.dest(config.paths.prod));
 });
 
