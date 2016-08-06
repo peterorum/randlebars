@@ -38,13 +38,11 @@ gulp.task('styles:css', function() {
     .pipe($.plumber({
       errorHandler: config.errorHandler('styles:css')
     }))
-    // .pipe($.sourcemaps.init())
     .pipe($.concat('styles.scss'))
     .pipe($.sass(sassOptions))
     .pipe($.autoprefixer({
       browsers: ['last 2 versions', '> 5%']
     }))
-    // .pipe($.sourcemaps.write('maps'))
     .pipe(gulp.dest(path.join(config.paths.dev, 'css')));
 });
 
