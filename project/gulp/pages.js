@@ -37,12 +37,15 @@ gulp.task('pages:templates', function() {
     .pipe($.rename({
       extname: '.html'
     }))
-    .pipe($.inject(gulp.src(path.join(config.paths.dev, 'css/*.css'), {
+    .pipe($.inject(gulp.src(path.join(config.paths.dev, 'css/libs.css'), {
+      read: false
+    }), config.injectCssLib))
+    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'css/*.css'), '!' + path.join(config.paths.dev, 'css/libs.css')], {
       read: false
     }), config.inject))
     .pipe($.inject(gulp.src(path.join(config.paths.dev, 'js/libs.js'), {
       read: false
-    }), config.injectLib))
+    }), config.injectJsLib))
     .pipe($.inject(gulp.src([path.join(config.paths.dev, 'js/*.js'), '!' + path.join(config.paths.dev, 'js/libs.js')], {
       read: false
     }), config.inject))

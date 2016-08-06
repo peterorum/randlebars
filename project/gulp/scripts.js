@@ -86,7 +86,7 @@ gulp.task('handlebars:templates', function() {
     .pipe($.declare({
       namespace: 'randlebars.templates',
       root: "window",
-      noRedeclare: true, // Avoid duplicate declarations
+      noRedeclare: true, // avoid duplicate declarations
     }))
     .pipe($.concat('templates.js'))
     .pipe(gulp.dest(path.join(config.paths.dev, 'js')));

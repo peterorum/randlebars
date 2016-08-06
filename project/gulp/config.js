@@ -45,7 +45,13 @@ exports.inject = {
   addRootSlash: false,
 };
 
-exports.injectLib = {
+exports.injectCssLib = {
+  ignorePath: '.tmp/',
+  addRootSlash: false,
+  starttag:'<!-- inject:csslibs -->'
+};
+
+exports.injectJsLib = {
   ignorePath: '.tmp/',
   addRootSlash: false,
   starttag:'<!-- inject:jslibs -->'

@@ -70,7 +70,6 @@ gulp.task('images:build', function() {
     .pipe(gulp.dest(path.join(config.paths.dev, 'images')));
 });
 
-
 // build minified css from css
 
 function minify() {
@@ -84,8 +83,7 @@ function minify() {
     }))
     .pipe($.sourcemaps.write('maps'))
     .pipe(path.join(gulp.dest(config.paths.dev), 'css'));
-}
-;
+};
 
 gulp.task('styles:minify', function() {
 
