@@ -5,8 +5,7 @@ var gulp = require('gulp');
 var config = require('./config');
 
 var bs = require('browser-sync');
-// var browserSync = bs.has('dev-server') ? bs.get('dev-server') : bs.create('dev-server');
-var browserSync = bs.create('dev-server');
+var browserSync = bs.has('dev-server') ? bs.get('dev-server') : bs.create('dev-server');
 
 var $ = require('gulp-load-plugins')({
   lazy: true
@@ -17,6 +16,7 @@ var src = [
   path.join(config.paths.src, 'styles/common/**/*.scss'),
   path.join(config.paths.src, 'components/**/*.scss')
 ];
+
 
 var libs = [path.join(config.paths.src, '/styles/libs.scss')];
 
@@ -34,6 +34,7 @@ gulp.task('styles:lint', function() {
 var sassOptions = {
   style: 'expanded'
 };
+
 
 gulp.task('styles:css', function() {
 
