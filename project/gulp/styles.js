@@ -35,7 +35,6 @@ var sassOptions = {
   style: 'expanded'
 };
 
-
 gulp.task('styles:css', function() {
 
   return gulp.src(src)
@@ -49,8 +48,7 @@ gulp.task('styles:css', function() {
       browsers: ['last 2 versions', '> 5%']
     }))
     .pipe(gulp.dest(path.join(config.paths.dev, 'css')))
-    // .pipe(browserSync.stream());
-    .pipe(browserSync.reload({stream: true}));
+    .pipe(browserSync.stream());
 });
 
 // build library

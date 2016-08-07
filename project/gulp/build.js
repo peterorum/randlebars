@@ -65,18 +65,17 @@ gulp.task('build:assets', function() {
 });
 
 gulp.task('build:dev', function(done) {
-  runSequence('clean:dev',
+  return runSequence('clean:dev',
     ['styles:build', 'images:build', 'libs:css', 'scripts:build', 'libs:js'],
     ['pages:build'],
     done);
 });
 
-gulp.task('build:prod', function(done) {
+gulp.task('build:prod', function() {
 
-  runSequence('clean:prod',
+  return runSequence('clean:prod',
     'build:dev',
-    ['build:optimize:html', 'build:optimize:scripts', 'build:assets'],
-    done);
+    ['build:optimize:html', 'build:optimize:scripts', 'build:assets']);
 });
 
 gulp.task('build', ['build:prod']);
