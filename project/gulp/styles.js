@@ -4,6 +4,10 @@ var path = require('path');
 var gulp = require('gulp');
 var config = require('./config');
 
+var bs = require('browser-sync');
+// var browserSync = bs.has('dev-server') ? bs.get('dev-server') : bs.create('dev-server');
+var browserSync = bs.create('dev-server');
+
 var $ = require('gulp-load-plugins')({
   lazy: true
 });
@@ -43,7 +47,9 @@ gulp.task('styles:css', function() {
     .pipe($.autoprefixer({
       browsers: ['last 2 versions', '> 5%']
     }))
-    .pipe(gulp.dest(path.join(config.paths.dev, 'css')));
+    .pipe(gulp.dest(path.join(config.paths.dev, 'css')))
+    // .pipe(browserSync.stream());
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // build library

@@ -18,9 +18,7 @@
         // new #word element, not el, as it's replaced
         $('#word').fadeIn();
       });
-
     });
-
   });
 
   function renderWord() {
