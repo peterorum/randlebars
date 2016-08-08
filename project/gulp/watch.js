@@ -42,7 +42,7 @@ gulp.task('watch:pages:templates', ['pages:templates'], function(done) {
 
 gulp.task('serve', ['watch'], function() {
 
-  browserSync.instance = browserSync.init({
+  browserSync.init({
     server: true,
     startPath: config.paths.dev,
     port: 3000
