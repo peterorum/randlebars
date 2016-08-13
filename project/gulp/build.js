@@ -80,4 +80,14 @@ gulp.task('build:prod', function() {
     ['build:optimize:html', 'build:optimize:scripts', 'build:assets']);
 });
 
-gulp.task('build', ['build:prod']);
+// bump minor version on each build
+gulp.task('bump', function() {
+
+  return gulp
+    .src([path.join(config.paths.root, 'package.json')])
+    .pipe($.bump())
+    .pipe(gulp.dest(config.paths.root));
+});
+
+
+gulp.task('build', ['build:prod', 'bump']);

@@ -1,6 +1,6 @@
 {
   "name": "randlebars",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Boilerplate handlebars using a random word",
   "main": "index.html",
   "scripts": {
@@ -20,6 +20,7 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.2",
+    "gulp-bump": "^2.4.0",
     "gulp-clean-css": "^2.0.3",
     "gulp-concat": "^2.6.0",
     "gulp-debug": "^2.1.2",

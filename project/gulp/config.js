@@ -13,6 +13,7 @@ exports.paths = {
   src: 'src/',
   dev: '.tmp/',
   prod: 'dist/',
+  root: './',
   libs: 'bower_components/',
 
   css: {
