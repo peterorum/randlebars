@@ -54,7 +54,9 @@ gulp.task('build:optimize:html', function() {
     .pipe($.if(/.*[js|css]$/, $.rev()))
     .pipe($.if('*.html', $.htmlmin(config.htmlmin)))
     .pipe($.revReplace())
-    .pipe($.if(/.*\.html$/, gulp.dest(config.paths.prod)));
+    .pipe($.if(/.*\.html$/, gulp.dest(config.paths.prod)))
+    .pipe($.rev.manifest())
+    .pipe(gulp.dest(config.paths.prod));
 });
 
 gulp.task('build:assets', function() {

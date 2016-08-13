@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "karma start",
-    "test:watch": "karma start --auto-watch --no-single-run",
+    "test:watch": "karma start --auto-watch --no-single-run"
   },
   "repository": {
     "type": "git",

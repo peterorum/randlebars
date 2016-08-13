@@ -106,21 +106,6 @@ gulp.task('handlebars:partials', function() {
     .pipe(gulp.dest(path.join(config.paths.dev, 'js')));
 });
 
-// // join all js
-
-// gulp.task('scripts:js', function() {
-
-//   // skip babel as it's slow
-//   // means only developing in chrome
-
-//   return gulp.src(config.jsSrc())
-//     .pipe($.if(args.verbose, $.debug({
-//       title: 'scripts:js:'
-//     })))
-//     .pipe($.concat('scripts.js'))
-//     .pipe(gulp.dest(path.join(config.paths.dev, 'js')));
-// });
-
 // join all specific library js (must already be minimized)
 // doesn't change often, so not in watch. just gulp build
 
