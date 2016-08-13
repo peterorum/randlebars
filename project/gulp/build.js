@@ -90,7 +90,4 @@ gulp.task('bump', function() {
     .pipe(gulp.dest(config.paths.root));
 });
 
-
 gulp.task('build', ['build:prod', 'bump']);
-
-gulp.task('build:temp', ['build:optimize:html', 'build:optimize:scripts']);

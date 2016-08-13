@@ -56,10 +56,7 @@ exports.jsSrc = function() {
 // karma
 
 exports.karma = {
-  files: [
-    // libs
-    bowerJsFiles,
-    // exports.paths.dev + 'js/libs.js',
+  files: bowerJsFiles.concat( [
     // handlebars
     exports.paths.dev + 'js/templates.js',
     exports.paths.dev + 'js/partials.js',
@@ -68,7 +65,7 @@ exports.karma = {
     exports.paths.src + 'app/**/*.spec.js',
     exports.paths.src + 'components/**/*.js',
     exports.paths.src + 'components/**/*.spec.js'
-  ],
+  ]),
   serverIntegrationSpecs: [],
   exclude: [],
   preprocessors: {

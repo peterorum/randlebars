@@ -36,7 +36,7 @@ function startTests(isSingleRun, done) {
 }
 
 // single run
-gulp.task('test', ['build:dev'], function(done) {
+gulp.task('test', [/* 'build:dev' */], function(done) {
 
   startTests(true, done); // single run
 
