@@ -4,8 +4,6 @@
   "description": "Boilerplate handlebars using a random word",
   "main": "index.html",
   "scripts": {
-    "test": "karma start",
-    "test:watch": "karma start --auto-watch --no-single-run"
   },
   "repository": {
     "type": "git",

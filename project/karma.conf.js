@@ -2,10 +2,13 @@
 // Generated on Fri Mar 18 2016 11:46:47 GMT+1100 (AEDT)
 
 module.exports = function(config) {
+
+  var gulpConfig = require('./gulp/config.js');
+
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: './',
 
 
     // frameworks to use
@@ -14,25 +17,17 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [
-
-      'src/components/**/*.js',
-
-      'src/components/**/*.spec.js'
-    ],
+    files: gulpConfig.karma.files,
 
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: gulpConfig.karma.exclude,
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     // do not include library files
-    preprocessors: {
-      'src/**/*.js': ['babel']
-    },
+    preprocessors: gulpConfig.karma.preprocessors,
 
     // must install this in a folder above source
     // npm install --save-dev babel-preset-es2015

@@ -14,17 +14,19 @@
 
     let page = $('#content').data('page');
 
-    let word = window.RandlebarsApp.getWord();
+    if (page) {
+      let word = window.RandlebarsApp.getWord();
 
-    var html = window.randlebars.templates[page]({
-      word: word
-    });
+      var html = window.randlebars.templates[page]({
+        word: word
+      });
 
-    $('#content')
-      .empty()
-      .html(html);
+      $('#content')
+        .empty()
+        .html(html);
 
-    $('#word').fadeIn();
+      $('#word').fadeIn();
+    }
   }
 
 })(jQuery);

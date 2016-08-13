@@ -40,6 +40,28 @@ exports.jsSrc = function() {
   ];
 };
 
+// karma
+
+exports.karma = {
+  files: [
+  // libs
+  exports.paths.dev + 'js/libs.js',
+  // handlebars
+  exports.paths.dev + 'js/templates.js',
+  exports.paths.dev + 'js/partials.js',
+  // src
+  exports.paths.src + 'app/**/*.js',
+  exports.paths.src + 'app/**/*.spec.js',
+  exports.paths.src + 'components/**/*.js',
+  exports.paths.src + 'components/**/*.spec.js'
+  ],
+  serverIntegrationSpecs: [],
+  exclude: [],
+  preprocessors: {
+      'src/**/*.js': ['babel']
+    }
+}
+
 // options
 
 exports.htmlmin = {
@@ -68,6 +90,7 @@ exports.injectHandlebars.starttag = '<!-- inject:handlebars -->';
 
 exports.injectJsLocal = _.clone(exports.inject);
 exports.injectJsLocal.addPrefix = '..';
+
 
 /**
  *  Common implementation for an error handler of a gulp plugin

@@ -7,7 +7,7 @@ var config = require('./config');
 var bs = require('browser-sync');
 var browserSync = bs.has('dev-server') ? bs.get('dev-server') : bs.create('dev-server');
 
-gulp.task('watch', [], () => {
+gulp.task('watch:files', [], () => {
   // css is injected without reload in styles.js
   gulp.watch(path.join(config.paths.src, '**/*.scss'), ['styles:lint', 'styles:css']);
 
@@ -40,7 +40,7 @@ gulp.task('watch:pages:templates', ['pages:templates'], function(done) {
 
 // --------- start server & watch
 
-gulp.task('serve', ['watch'], function() {
+gulp.task('watch', ['watch:files'], function() {
 
   browserSync.init({
     server: true,
@@ -48,6 +48,7 @@ gulp.task('serve', ['watch'], function() {
     port: 3000
   });
 
+  console.log('For tests, run gulp watch:test');
 });
 
 gulp.task('serve:dist', ['build:prod'], function(done) {

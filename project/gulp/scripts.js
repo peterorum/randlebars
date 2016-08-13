@@ -29,6 +29,7 @@ var handlebarsPartials = [
 // after change, run gulp build
 
 var libs = [
+  path.join(config.paths.libs, 'jquery/dist/jquery.min.js'),
   path.join(config.paths.libs, 'handlebars/handlebars.runtime.min.js')
 ];
 
