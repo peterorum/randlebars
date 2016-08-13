@@ -24,7 +24,7 @@ gulp.task('build:optimize:scripts', function() {
   return gulp
     .src(path.join(config.paths.dev, 'index.html'))
     .pipe($.plumber())
-    .pipe($.useref({searchPath: [config.paths.dev, config.paths.src] }))
+    .pipe($.useref({searchPath: [config.paths.dev, config.paths.src, config.paths.libs] }))
     // js
     .pipe(jsFilter)
     .pipe($.rev())
@@ -50,7 +50,8 @@ gulp.task('build:optimize:html', function() {
   return gulp
     .src(path.join(config.paths.dev, '*.html'))
     .pipe($.plumber())
-    .pipe($.useref({searchPath: [config.paths.dev, config.paths.src] }))
+    .pipe($.useref({searchPath: [config.paths.dev, config.paths.src, config.paths.libs] }))
+    .pipe($.debug())
     .pipe($.if(/.*[js|css]$/, $.rev()))
     .pipe($.if('*.html', $.htmlmin(config.htmlmin)))
     .pipe($.revReplace())
@@ -91,3 +92,5 @@ gulp.task('bump', function() {
 
 
 gulp.task('build', ['build:prod', 'bump']);
+
+gulp.task('build:temp', ['build:optimize:html', 'build:optimize:scripts']);

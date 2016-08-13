@@ -9,6 +9,17 @@ var $ = require('gulp-load-plugins')({
 var path = require('path');
 var _ = require('lodash');
 
+var wiredep = require('wiredep');
+var bowerJsFiles = wiredep({
+  devDependencies: true
+})['js'];
+
+var bower = {
+  json: require('../bower.json'),
+  directory: './bower_components/',
+  ignorePath: '../'
+};
+
 exports.paths = {
   src: 'src/',
   dev: '.tmp/',
@@ -36,7 +47,9 @@ exports.paths = {
 exports.jsSrc = function() {
   return [
     path.join(exports.paths.src, '/app/**/*.js'),
-    path.join(exports.paths.src, '/components/**/*.js')
+    path.join(exports.paths.src, '/components/**/*.js'),
+    '!' + path.join(exports.paths.src, '/app/**/*.spec.js'),
+    '!' + path.join(exports.paths.src, '/components/**/*.spec.js'),
   ];
 };
 
@@ -44,22 +57,23 @@ exports.jsSrc = function() {
 
 exports.karma = {
   files: [
-  // libs
-  exports.paths.dev + 'js/libs.js',
-  // handlebars
-  exports.paths.dev + 'js/templates.js',
-  exports.paths.dev + 'js/partials.js',
-  // src
-  exports.paths.src + 'app/**/*.js',
-  exports.paths.src + 'app/**/*.spec.js',
-  exports.paths.src + 'components/**/*.js',
-  exports.paths.src + 'components/**/*.spec.js'
+    // libs
+    bowerJsFiles,
+    // exports.paths.dev + 'js/libs.js',
+    // handlebars
+    exports.paths.dev + 'js/templates.js',
+    exports.paths.dev + 'js/partials.js',
+    // src
+    exports.paths.src + 'app/**/*.js',
+    exports.paths.src + 'app/**/*.spec.js',
+    exports.paths.src + 'components/**/*.js',
+    exports.paths.src + 'components/**/*.spec.js'
   ],
   serverIntegrationSpecs: [],
   exclude: [],
   preprocessors: {
-      'src/**/*.js': ['babel']
-    }
+    'src/**/*.js': ['babel']
+  }
 }
 
 // options
@@ -78,11 +92,7 @@ exports.inject = {
   addRootSlash: false,
 };
 
-exports.injectCssLib = _.clone(exports.inject);
-exports.injectCssLib.starttag = '<!-- inject:csslibs -->';
-
 exports.injectJsLib = _.clone(exports.inject);
-exports.injectJsLib.starttag = '<!-- inject:jslibs -->';
 
 // templates & partials
 exports.injectHandlebars = _.clone(exports.inject);
@@ -91,6 +101,19 @@ exports.injectHandlebars.starttag = '<!-- inject:handlebars -->';
 exports.injectJsLocal = _.clone(exports.inject);
 exports.injectJsLocal.addPrefix = '..';
 
+/**
+ * wiredep and bower settings
+ */
+exports.getWiredepDefaultOptions = function() {
+
+  var options = {
+    bowerJson: bower.json,
+    directory: bower.directory,
+    ignorePath: bower.ignorePath
+  };
+
+  return options;
+};
 
 /**
  *  Common implementation for an error handler of a gulp plugin

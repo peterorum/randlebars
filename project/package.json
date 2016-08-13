@@ -3,8 +3,7 @@
   "version": "1.0.1",
   "description": "Boilerplate handlebars using a random word",
   "main": "index.html",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/peterorum/randlebars"
@@ -61,6 +60,7 @@
     "phantomjs-prebuilt": "^2.1.6",
     "run-sequence": "^1.2.2",
     "sinon": "^1.17.3",
+    "wiredep": "^4.0.0",
     "yargs": "^4.8.1"
   },
   "dependencies": {}

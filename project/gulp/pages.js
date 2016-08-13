@@ -20,6 +20,10 @@ gulp.task('pages:templates', function() {
 
   var templateHtml = fs.readFileSync(path.join(config.paths.src, 'pages/page.html'), 'utf8');
 
+  // wire-up the bower dependencies
+
+  var wiredep = require('wiredep').stream;
+  var wiredepOptions = config.getWiredepDefaultOptions();
 
   return gulp.src(templates, {
     read: false
@@ -37,24 +41,21 @@ gulp.task('pages:templates', function() {
     .pipe($.rename({
       extname: '.html'
     }))
-    .pipe($.inject(gulp.src(path.join(config.paths.dev, 'css/libs.css'), {
-      read: false
-    }), config.injectCssLib))
-    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'css/*.css'), '!' + path.join(config.paths.dev, 'css/libs.css')], {
+    // wiredep bower
+    .pipe(wiredep(wiredepOptions))
+    // inject custom css
+    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'css/*.css')], {
       read: false
     }), config.inject))
-    .pipe($.inject(gulp.src(path.join(config.paths.dev, 'js/libs.js'), {
-      read: false
-    }), config.injectJsLib))
     // handlebats templates & partials
     .pipe($.inject(gulp.src([path.join(config.paths.dev, 'js/templates.js'), path.join(config.paths.dev, 'js/partials.js')], {
       read: false
     }), config.injectHandlebars))
-    // actual source (apps, components, pages)
-    .pipe($.inject(gulp.src([path.join(config.paths.src, '**/*.js')], {
+    // inject custom js (apps, components, pages)
+    .pipe($.inject(gulp.src(config.jsSrc(), {
       read: false
     }), config.injectJsLocal))
     .pipe(gulp.dest(config.paths.dev));
 });
 
-gulp.task('pages:build', [ 'pages:templates']);
+gulp.task('pages:build', ['pages:templates']);
