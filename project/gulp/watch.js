@@ -23,12 +23,12 @@ gulp.task('watch:js', ['scripts:lint'], function(done) {
   done();
 });
 
-gulp.task('watch:handlebars:templates', ['handlebars:templates'], function(done) {
+gulp.task('watch:handlebars:templates', ['handlebars:compile'], function(done) {
   browserSync.reload();
   done();
 });
 
-gulp.task('watch:handlebars:partials', ['handlebars:partials'], function(done) {
+gulp.task('watch:handlebars:partials', ['handlebars:compile', 'handlebars:partials'], function(done) {
   browserSync.reload();
   done();
 });

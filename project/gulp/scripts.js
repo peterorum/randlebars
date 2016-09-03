@@ -5,8 +5,9 @@ var gulp = require('gulp');
 var config = require('./config');
 var args = require('yargs').argv;
 var del = require('del');
-
+var fs = require('fs');
 var handlebars = require('handlebars');
+var runSequence = require('run-sequence');
 
 var $ = require('gulp-load-plugins')({
   lazy: true
@@ -20,10 +21,14 @@ var handlebarsTemplates = [
 ];
 
 // components
-var handlebarsPartials = [
-  path.join(config.paths.src, 'components/**/*.hbs')
+var handlebarsServerPartials = [
+  path.join(config.paths.src, 'components/**/*.hbs'),
+  '!' + path.join(config.paths.src, '_components/**/*.hbs')
 ];
 
+var handlebarsClientPartials = [
+  path.join(config.paths.src, 'components/**/_*.hbs')
+];
 
 // must already be minified
 // after change, run gulp build
@@ -68,7 +73,7 @@ gulp.task('scripts:lint:jscs:fix', function() {
     .pipe(gulp.dest(config.paths.js.src));
 });
 
-// handlebars templates
+// comile handlebars templates to js functions for rendering in the browser
 gulp.task('handlebars:templates', function() {
   return gulp.src(handlebarsTemplates)
     // .pipe($.if(args.verbose, $.debug({
@@ -88,7 +93,7 @@ gulp.task('handlebars:templates', function() {
 });
 
 gulp.task('handlebars:partials', function() {
-  return gulp.src(handlebarsPartials)
+  return gulp.src(handlebarsClientPartials)
     .pipe($.if(args.verbose, $.debug({
       title: 'partial'
     })))
@@ -105,6 +110,85 @@ gulp.task('handlebars:partials', function() {
     }))
     .pipe($.concat('partials.js'))
     .pipe(gulp.dest(path.join(config.paths.dev, 'js')));
+});
+
+// compile handlebars templates to html server-side
+gulp.task('handlebars:compile:templates', function() {
+
+  return gulp.src(handlebarsTemplates)
+    .pipe($.if(args.verbose, $.debug({
+      title: 'compile'
+    })))
+    .pipe($.tap(file => {
+        var data = {};
+        var options = {
+
+        };
+
+        var template = handlebars.compile(file._contents.toString(), options);
+        var html = template(data);
+        file._contents = new Buffer(html);
+    }))
+    .pipe($.rename({
+      extname: '.html'
+    }))
+    .pipe(gulp.dest(config.paths.dev));
+});
+
+// make an html page for each template, rendering its handlebars into <!-- inset:content -->
+
+gulp.task('pages:templates', function() {
+
+  var templateHtml = fs.readFileSync(path.join(config.paths.src, 'pages/page.html'), 'utf8');
+
+  // wire-up the bower dependencies
+
+  var wiredep = require('wiredep').stream;
+  var wiredepOptions = config.getWiredepDefaultOptions();
+
+  return gulp.src(handlebarsTemplates, {
+    read: false
+  })
+    .pipe($.tap(function(file) {
+      let filename = path.basename(file.path, '.hbs');
+
+      let contents = templateHtml;
+
+      // insert filename, replacing <!-- insert:filename -->
+      contents = contents.replace(/<!--\s?insert\s?:\s?filename\s?-->/gi, filename);
+
+      file.contents = new Buffer(contents);
+    }))
+    .pipe($.rename({
+      extname: '.html'
+    }))
+    // wiredep bower
+    .pipe(wiredep(wiredepOptions))
+    // inject custom css
+    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'css/*.css')], {
+      read: false
+    }), config.inject))
+    // handlebars templates & partials
+    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'js/templates.js'), path.join(config.paths.dev, 'js/partials.js')], {
+      read: false
+    }), config.injectHandlebars))
+    // inject custom js (apps, components, pages)
+    .pipe($.inject(gulp.src(config.jsSrc(), {
+      read: false
+    }), config.injectJsLocal))
+    .pipe(gulp.dest(config.paths.dev));
+});
+
+// register each server-side partial for compilation process
+gulp.task('handlebars:compile:registerPartials', function() {
+  return gulp.src(handlebarsServerPartials)
+    .pipe($.if(args.verbose, $.debug({
+      title: 'register partial'
+    })))
+  .pipe($.tap(file => {
+      let filename = path.basename(file.path, '.hbs');
+      handlebars.registerPartial(filename, file._contents.toString());
+  }))
 });
 
 // join all specific library js (must already be minimized)
@@ -163,6 +247,13 @@ gulp.task('scripts:fix', ['scripts:lint:jscs:fix']);
 
 gulp.task('libs:js:build', ['libs:js', 'libs:js:separate']);
 
-gulp.task('handlebars:build', ['handlebars:templates', 'handlebars:partials']);
+gulp.task('handlebars:build', ['handlebars:compile', 'handlebars:partials']);
 
-gulp.task('scripts:build', [/* 'scripts:js', */ 'handlebars:build']);
+gulp.task('handlebars:compile', function() {
+
+  return runSequence('handlebars:compile:registerPartials',
+    'handlebars:compile:templates');
+});
+
+gulp.task('scripts:build', ['handlebars:build']);
+
