@@ -23,7 +23,7 @@ var bower = {
 exports.paths = {
   src: 'src/',
   dev: '.tmp/',
-  prod: 'dist/',
+  dist: 'dist/',
   root: './',
   libs: 'bower_components/',
 

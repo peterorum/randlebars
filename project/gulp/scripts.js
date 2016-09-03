@@ -21,13 +21,8 @@ var handlebarsTemplates = [
 ];
 
 // components
-var handlebarsServerPartials = [
-  path.join(config.paths.src, 'components/**/*.hbs'),
-  '!' + path.join(config.paths.src, '_components/**/*.hbs')
-];
-
-var handlebarsClientPartials = [
-  path.join(config.paths.src, 'components/**/_*.hbs')
+var handlebarsPartials = [
+  path.join(config.paths.src, 'components/**/*.hbs')
 ];
 
 // must already be minified
@@ -73,27 +68,11 @@ gulp.task('scripts:lint:jscs:fix', function() {
     .pipe(gulp.dest(config.paths.js.src));
 });
 
-// comile handlebars templates to js functions for rendering in the browser
-gulp.task('handlebars:templates', function() {
-  return gulp.src(handlebarsTemplates)
-    // .pipe($.if(args.verbose, $.debug({
-    //   title: 'templates'
-    // })))
-    .pipe($.handlebars({
-      handlebars: handlebars
-    }))
-    .pipe($.wrap('Handlebars.template(<%= contents %>)'))
-    .pipe($.declare({
-      namespace: 'randlebars.templates',
-      root: "window",
-      noRedeclare: true, // avoid duplicate declarations
-    }))
-    .pipe($.concat('templates.js'))
-    .pipe(gulp.dest(path.join(config.paths.dev, 'js')));
-});
-
+// compile client-side partials
 gulp.task('handlebars:partials', function() {
-  return gulp.src(handlebarsClientPartials)
+  return gulp.src(handlebarsPartials)
+    // name begins with _
+    .pipe($.filter( file => /^_/.test(path.basename(file.path))))
     .pipe($.if(args.verbose, $.debug({
       title: 'partial'
     })))
@@ -104,7 +83,7 @@ gulp.task('handlebars:partials', function() {
     .pipe($.wrap('Handlebars.registerPartial(<%= processPartialName(file.relative) %>, Handlebars.template(<%= contents %>));', {}, {
       imports: {
         processPartialName: function(fileName) {
-          return JSON.stringify(path.basename(fileName, '.js'));
+          return JSON.stringify(path.basename(fileName, '.js').replace(/^_/, ''));
         }
       }
     }))
@@ -113,31 +92,9 @@ gulp.task('handlebars:partials', function() {
 });
 
 // compile handlebars templates to html server-side
-gulp.task('handlebars:compile:templates', function() {
-
-  return gulp.src(handlebarsTemplates)
-    .pipe($.if(args.verbose, $.debug({
-      title: 'compile'
-    })))
-    .pipe($.tap(file => {
-        var data = {};
-        var options = {
-
-        };
-
-        var template = handlebars.compile(file._contents.toString(), options);
-        var html = template(data);
-        file._contents = new Buffer(html);
-    }))
-    .pipe($.rename({
-      extname: '.html'
-    }))
-    .pipe(gulp.dest(config.paths.dev));
-});
-
 // make an html page for each template, rendering its handlebars into <!-- inset:content -->
 
-gulp.task('pages:templates', function() {
+gulp.task('handlebars:compile:templates', function() {
 
   var templateHtml = fs.readFileSync(path.join(config.paths.src, 'pages/page.html'), 'utf8');
 
@@ -146,16 +103,22 @@ gulp.task('pages:templates', function() {
   var wiredep = require('wiredep').stream;
   var wiredepOptions = config.getWiredepDefaultOptions();
 
-  return gulp.src(handlebarsTemplates, {
-    read: false
-  })
+  return gulp.src(handlebarsTemplates)
     .pipe($.tap(function(file) {
-      let filename = path.basename(file.path, '.hbs');
 
+      // init with whole page template
       let contents = templateHtml;
 
-      // insert filename, replacing <!-- insert:filename -->
-      contents = contents.replace(/<!--\s?insert\s?:\s?filename\s?-->/gi, filename);
+      // render handlebars to html
+      var data = {};
+      var options = {
+      };
+
+      var template = handlebars.compile(file._contents.toString(), options);
+      var html = template(data);
+
+      // insert html, replacing <!-- insert:html -->
+      contents = contents.replace(/<!--\s?insert\s?:\s?html\s?-->/gi, html);
 
       file.contents = new Buffer(contents);
     }))
@@ -181,12 +144,12 @@ gulp.task('pages:templates', function() {
 
 // register each server-side partial for compilation process
 gulp.task('handlebars:compile:registerPartials', function() {
-  return gulp.src(handlebarsServerPartials)
+  return gulp.src(handlebarsPartials)
     .pipe($.if(args.verbose, $.debug({
       title: 'register partial'
     })))
   .pipe($.tap(file => {
-      let filename = path.basename(file.path, '.hbs');
+      let filename = path.basename(file.path, '.hbs').replace(/^_/, '');
       handlebars.registerPartial(filename, file._contents.toString());
   }))
 });
@@ -247,12 +210,13 @@ gulp.task('scripts:fix', ['scripts:lint:jscs:fix']);
 
 gulp.task('libs:js:build', ['libs:js', 'libs:js:separate']);
 
-gulp.task('handlebars:build', ['handlebars:compile', 'handlebars:partials']);
+gulp.task('handlebars:build', ['handlebars:compile']);
 
-gulp.task('handlebars:compile', function() {
+gulp.task('handlebars:compile', function(done) {
 
-  return runSequence('handlebars:compile:registerPartials',
-    'handlebars:compile:templates');
+  return runSequence(['handlebars:partials', 'handlebars:compile:registerPartials'],
+    'handlebars:compile:templates',
+    done);
 });
 
 gulp.task('scripts:build', ['handlebars:build']);

@@ -2,6 +2,8 @@
 
   $(document).ready(function() {
 
+    // --- events
+
     $(document).on('click', '#word-get', function() {
 
       let that = this;
@@ -19,6 +21,12 @@
         $('#word').fadeIn();
       });
     });
+
+    // --- initial word on page load
+
+    renderWord();
+    $('#word').slideDown();
+
   });
 
   function renderWord() {
@@ -31,7 +39,6 @@
     });
 
     $('#word').replaceWith(html);
-
   }
 
 })(jQuery);

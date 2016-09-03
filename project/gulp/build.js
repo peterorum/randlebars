@@ -10,8 +10,8 @@ var $ = require('gulp-load-plugins')({
   lazy: true
 });
 
-gulp.task('clean:prod', function() {
-  return del(config.paths.prod);
+gulp.task('clean:dist', function() {
+  return del(config.paths.dist);
 });
 
 gulp.task('build:optimize:scripts', function() {
@@ -42,7 +42,7 @@ gulp.task('build:optimize:scripts', function() {
     .pipe($.cleanCss())
     .pipe(cssFilter.restore)
     // write
-    .pipe(gulp.dest(config.paths.prod));
+    .pipe(gulp.dest(config.paths.dist));
 });
 
 gulp.task('build:optimize:html', function() {
@@ -55,28 +55,28 @@ gulp.task('build:optimize:html', function() {
     .pipe($.if(/.*[js|css]$/, $.rev()))
     .pipe($.if('*.html', $.htmlmin(config.htmlmin)))
     .pipe($.revReplace())
-    .pipe($.if(/.*\.html$/, gulp.dest(config.paths.prod)))
+    .pipe($.if(/.*\.html$/, gulp.dest(config.paths.dist)))
     .pipe($.rev.manifest())
-    .pipe(gulp.dest(config.paths.prod));
+    .pipe(gulp.dest(config.paths.dist));
 });
 
 gulp.task('build:assets', function() {
 
   return gulp
     .src([path.join(config.paths.dev, 'images/*.*')])
-    .pipe(gulp.dest(path.join(config.paths.prod, 'images')));
+    .pipe(gulp.dest(path.join(config.paths.dist, 'images')));
 });
 
 gulp.task('build:dev', function(done) {
   return runSequence('clean:dev',
-    ['styles:build', 'images:build', 'libs:css', 'scripts:build', 'libs:js'],
-    ['pages:build'],
+    ['styles:build', 'images:build', 'libs:css', 'libs:js'],
+    'scripts:build',
     done);
 });
 
-gulp.task('build:prod', function() {
+gulp.task('build:dist', function() {
 
-  return runSequence('clean:prod',
+  return runSequence('clean:dist',
     'build:dev',
     ['build:optimize:html', 'build:optimize:scripts', 'build:assets']);
 });
@@ -90,4 +90,4 @@ gulp.task('bump', function() {
     .pipe(gulp.dest(config.paths.root));
 });
 
-gulp.task('build', ['build:prod', 'bump']);
+gulp.task('build', ['build:dist', 'bump']);
