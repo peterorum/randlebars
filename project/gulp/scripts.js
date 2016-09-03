@@ -92,7 +92,7 @@ gulp.task('handlebars:partials', function() {
 });
 
 // compile handlebars templates to html server-side
-// make an html page for each template, rendering its handlebars into <!-- inset:content -->
+// make an html page for each template, rendering its handlebars into <!-- insert:content -->
 
 gulp.task('handlebars:compile:templates', function() {
 
