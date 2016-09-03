@@ -58,7 +58,6 @@ exports.jsSrc = function() {
 exports.karma = {
   files: bowerJsFiles.concat( [
     // handlebars
-    exports.paths.dev + 'js/templates.js',
     exports.paths.dev + 'js/partials.js',
     // src
     exports.paths.src + 'app/**/*.js',

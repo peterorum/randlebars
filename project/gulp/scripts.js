@@ -114,7 +114,7 @@ gulp.task('handlebars:compile:templates', function() {
       var options = {
       };
 
-      var template = handlebars.compile(file._contents.toString(), options);
+      var template = handlebars.compile(file.contents.toString(), options);
       var html = template(data);
 
       // insert html, replacing <!-- insert:html -->
@@ -132,7 +132,7 @@ gulp.task('handlebars:compile:templates', function() {
       read: false
     }), config.inject))
     // handlebars templates & partials
-    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'js/templates.js'), path.join(config.paths.dev, 'js/partials.js')], {
+    .pipe($.inject(gulp.src([path.join(config.paths.dev, 'js/partials.js')], {
       read: false
     }), config.injectHandlebars))
     // inject custom js (apps, components, pages)
@@ -142,7 +142,7 @@ gulp.task('handlebars:compile:templates', function() {
     .pipe(gulp.dest(config.paths.dev));
 });
 
-// register each server-side partial for compilation process
+// register each server-side partial for compilation process. Ignore leading _
 gulp.task('handlebars:compile:registerPartials', function() {
   return gulp.src(handlebarsPartials)
     .pipe($.if(args.verbose, $.debug({
@@ -150,7 +150,7 @@ gulp.task('handlebars:compile:registerPartials', function() {
     })))
   .pipe($.tap(file => {
       let filename = path.basename(file.path, '.hbs').replace(/^_/, '');
-      handlebars.registerPartial(filename, file._contents.toString());
+      handlebars.registerPartial(filename, file.contents.toString());
   }))
 });
 
@@ -178,39 +178,12 @@ gulp.task('clean:dev', function() {
   return del(config.paths.dev);
 });
 
-// build minified js
-
-function minify() {
-
-  return gulp.src([path.join(config.paths.dev, 'js//partials.js'),
-    path.join(config.paths.dev, 'js/templates.js'),
-    path.join(config.paths.dev, 'js/scripts.js')])
-    .pipe($.concat('scripts.js'))
-    .pipe($.sourcemaps.init())
-    .pipe($.babel({
-      presets: ['es2015']
-    }))
-    .pipe($.uglify())
-    .pipe($.rename({
-      suffix: '.min'
-    }))
-    .pipe($.sourcemaps.write('maps'))
-    .pipe(gulp.dest(config.paths.dev));
-};
-
-gulp.task('scripts:minify', function() {
-
-  return minify();
-});
-
 gulp.task('scripts:lint', ['scripts:lint:eslint', 'scripts:lint:jscs']);
 
 // only run manually, not with watch
 gulp.task('scripts:fix', ['scripts:lint:jscs:fix']);
 
 gulp.task('libs:js:build', ['libs:js', 'libs:js:separate']);
-
-gulp.task('handlebars:build', ['handlebars:compile']);
 
 gulp.task('handlebars:compile', function(done) {
 
@@ -219,5 +192,5 @@ gulp.task('handlebars:compile', function(done) {
     done);
 });
 
-gulp.task('scripts:build', ['handlebars:build']);
+gulp.task('scripts:build', ['handlebars:compile']);
 

@@ -75,25 +75,4 @@ gulp.task('images:build', function() {
     .pipe(gulp.dest(path.join(config.paths.dev, 'images')));
 });
 
-// build minified css from css
-
-function minify() {
-
-  return gulp.src([path.join(config.paths.dev, '/**/*.css'), '!' + path.join(config.paths.dev, '/**/*.min.css')])
-    .pipe($.debug())
-    .pipe($.sourcemaps.init())
-    .pipe($.cleanCss({}))
-    .pipe($.rename({
-      suffix: '.min'
-    }))
-    .pipe($.sourcemaps.write('maps'))
-    .pipe(path.join(gulp.dest(config.paths.dev), 'css'));
-};
-
-gulp.task('styles:minify', function() {
-
-  return minify();
-
-});
-
 gulp.task('styles:build', ['styles:lint', 'styles:css']);
