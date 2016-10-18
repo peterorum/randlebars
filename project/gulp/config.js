@@ -10,6 +10,7 @@ var path = require('path');
 var _ = require('lodash');
 
 var wiredep = require('wiredep');
+
 var bowerJsFiles = wiredep({
   devDependencies: true
 })['js'];

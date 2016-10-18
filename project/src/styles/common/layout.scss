@@ -2,6 +2,17 @@ body {
   background-color: $main-background-color;
 }
 
+.skip-link {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  color: $text-color;
+
+  &:focus {
+    right: auto;
+  }
+}
+
 .container {
   display: flex;
   flex-direction: column;
