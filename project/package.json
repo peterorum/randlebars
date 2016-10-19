@@ -1,6 +1,6 @@
 {
   "name": "randlebars",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Boilerplate handlebars using a random word",
   "main": "index.html",
   "scripts": {},
