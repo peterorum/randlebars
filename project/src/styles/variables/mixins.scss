@@ -17,6 +17,12 @@
       background-repeat: repeat-x;
       background-position: bottom 0.05em center;
       background-size: 100% 0.12em;
+
+      &:focus {
+        // focus changes background
+        text-shadow: none;
+      }
     }
+
   }
 }

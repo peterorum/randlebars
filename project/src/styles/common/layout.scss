@@ -29,4 +29,9 @@ body {
     opacity: 0.8;
   }
 
+  p a:focus {
+    outline: none;
+    background: $color-primary;
+    color: $color-secondary;
+  }
 }
