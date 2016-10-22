@@ -1,10 +1,17 @@
-@mixin anchor ($color) {
+@mixin anchor ($color, $background-color: $main-background-color) {
 
   a {
     color: $color;
     text-decoration: none;
 
     &:not(.image-link):hover {
+
+      // surround text with invisible shadow so underline does not cross letters
+      text-shadow: 0.05em 0 0 $background-color, -0.05em 0 0 $background-color,
+      0 0.05em 0 $background-color, 0 -0.05em 0 $background-color,
+      0.1em 0 0 $background-color, -0.1em 0 0 $background-color,
+      0 0.1em 0 $background-color, 0 -0.1em 0 $background-color;
+
       // underline a little lower than underline
       background-image: linear-gradient(to right, currentColor 0%, currentColor 100%);
       background-repeat: repeat-x;
