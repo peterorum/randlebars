@@ -35,3 +35,20 @@ body {
     color: $color-secondary;
   }
 }
+
+// external links
+[href^='http']:not([href*='codeindeed.com'])::after {
+  $size: 0.4em;
+
+  display: inline-block;
+  width: $size;
+  height: $size;
+  background-color: $color-white;
+  mask-image: url('../images/external-link.svg');
+  mask-size: cover;
+  transform: translate(3px, -5px);
+  content: "(external link)";
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: $size;
+}
