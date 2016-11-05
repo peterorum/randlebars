@@ -18,11 +18,6 @@ body {
   flex-direction: column;
   justify-content: center;
 
-  main {
-    margin: 0 auto;
-    color: $text-color;
-  }
-
   @include anchor($text-color);
 
   .image-link:hover {
@@ -36,6 +31,37 @@ body {
   }
 }
 
+main {
+  margin: 0 auto;
+  color: $text-color;
+}
+
+main * + * {
+  margin-top: 1.5rem;
+}
+
+main * + *:not(p) {
+  margin-top: 3rem 0;
+}
+
+main :empty {
+  display: none;
+}
+
+li,
+dt,
+dd,
+br,
+th,
+td {
+  margin-top: 0;
+}
+
+* + h2,
+* + h3 {
+  margin-top: 1.5em;
+}
+
 // external links
 [href^='http']:not([href*='codeindeed.com'])::after {
   $size: 0.4em;
@@ -44,7 +70,7 @@ body {
   width: $size;
   height: $size;
   background-color: $color-white;
-  mask-image: url('../images/external-link.svg');
+  mask-image: url("../images/external-link.svg");
   mask-size: cover;
   transform: translate(3px, -5px);
   content: "(external link)";
